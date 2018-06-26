@@ -2,6 +2,11 @@ sudo: false
 
 language: php
 
+php:
+  - 5.6
+  - 7.0
+  - hhvm
+
 services:
   - memcached
   - mongodb
@@ -11,10 +16,6 @@ services:
 
 matrix:
   fast_finish: true
-  include:
-    - php: 5.6
-    - php: 7.2
-    - php: hhvm
   allow_failures:
     - php: hhvm
 
@@ -27,7 +28,6 @@ before_install:
   - mysql -e "create database IF NOT EXISTS test;" -uroot
   - psql -c 'DROP DATABASE IF EXISTS test;' -U postgres
   - psql -c 'create database test;' -U postgres
-  - pecl install memcached
 
 install:
   - ./tests/script/install.sh
