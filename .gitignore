@@ -55,3 +55,7 @@ buildNumber.properties
 
 # local config #
 .env
+
+# think #
+/composer.lock
+/vendor
