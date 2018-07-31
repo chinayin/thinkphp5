@@ -130,8 +130,13 @@ class File
             $ip      = Request::instance()->ip();
             $method  = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'CLI';
             $uri     = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-            $message = "---------------------------------------------------------------\r\n[{$now}] {$ip} {$method} {$uri}\r\n" . $message;
-
+            //$message = "---------------------------------------------------------------\r\n[{$now}] {$ip} {$method} {$uri}\r\n" . $message;
+            /**
+             * 日志中输出 request_id.
+             * @author chinayin <whereismoney@qq.com>
+             */
+            $message = "---------------------------------------------------------------\r\n[{$now}] ".REQUEST_ID." {$ip} {$method} {$uri}\r\n" . $message;
+            
             $this->writed[$destination] = true;
         }
 
