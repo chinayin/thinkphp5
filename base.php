@@ -55,6 +55,20 @@ if (is_file(ROOT_PATH . '.env')) {
     }
 }
 
+/**
+ * 生成并设置 request_id.
+ * @author chinayin <whereismoney@qq.com>
+ */
+function gen_request_id() {
+    $REQ_ARRS = gettimeofday();
+    return $REQ_ARRS['sec'] . '.' . $REQ_ARRS['usec'];
+}
+
+defined('REQUEST_ID') || define('REQUEST_ID', gen_request_id());
+if (!IS_CLI) {
+    header('X-Request-Id: ' . REQUEST_ID);
+}
+
 // 注册自动加载
 \think\Loader::register();
 
