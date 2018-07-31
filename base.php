@@ -61,7 +61,8 @@ if (is_file(ROOT_PATH . '.env')) {
  */
 function gen_request_id() {
     $REQ_ARRS = gettimeofday();
-    return $REQ_ARRS['sec'] . '.' . $REQ_ARRS['usec'];
+    $pool = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+    return $REQ_ARRS['sec'] . '-' . $REQ_ARRS['usec'] . '-' . substr(str_shuffle(str_repeat($pool, 6)), 0, 6);
 }
 
 defined('REQUEST_ID') || define('REQUEST_ID', gen_request_id());
