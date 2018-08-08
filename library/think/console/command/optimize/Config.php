@@ -87,6 +87,13 @@ class Config extends Command
             $content .= substr(php_strip_whitespace($path . 'common' . EXT), 5) . PHP_EOL;
         }
 
+        /**
+         * 2018-08-08 额外加载公共包下的
+         */
+        if( empty($module) && is_file(COMMON_PATH . 'common' . EXT) ) {
+            $content .= substr(php_strip_whitespace(COMMON_PATH . 'common' . EXT), 5) . PHP_EOL;
+        }
+
         $content .= '\think\Config::set(' . var_export(ThinkConfig::get(), true) . ');';
         return $content;
     }

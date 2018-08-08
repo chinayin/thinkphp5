@@ -103,7 +103,7 @@ class App
             // 加载系统语言包
             Lang::load([
                 THINK_PATH . 'lang' . DS . $request->langset() . EXT,
-                //APP_PATH . 'lang' . DS . $request->langset() . EXT,
+                APP_PATH . 'lang' . DS . $request->langset() . EXT,
                 // 2018-08-08 更改公共语言包到common组下
                 COMMON_PATH . 'lang' . DS . $request->langset() . EXT,
             ]);
@@ -282,13 +282,11 @@ class App
                 include $path . 'common' . EXT;
             }
 
-            // 额外加载公共包下的
-            if(empty($module)){
-                // 2018-08-08 更改公共文件保存路径
-                $path_common = COMMON_PATH . $module;
-                if (is_file($path_common . 'common' . EXT)) {
-                    include $path_common . 'common' . EXT;
-                }
+            /**
+             * 2018-08-08 额外加载公共包下的
+             */
+            if( empty($module) && is_file(COMMON_PATH . 'common' . EXT) ) {
+                include COMMON_PATH . 'common' . EXT;
             }
 
             // 加载当前模块语言包
