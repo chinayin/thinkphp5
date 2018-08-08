@@ -1223,7 +1223,7 @@ class Query
     public function useSoftDelete($field, $condition = null)
     {
         if ($field) {
-            $this->options['soft_delete'] = [$field, $condition ?: ['null', '']];
+            $this->options['soft_delete'] = [$field, null !== $condition ? $condition: ['null', '']];
         }
         return $this;
     }
