@@ -22,6 +22,7 @@ return [
     'extra_file_list'        => [
         THINK_PATH . 'helper' . EXT,
         COMMON_PATH . 'helper' . EXT,
+        APP_PATH . 'helper' . EXT,
     ],
     // 默认输出类型
     'default_return_type'    => 'html',
