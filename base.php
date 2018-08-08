@@ -57,6 +57,18 @@ if (is_file(ROOT_PATH . '.env')) {
 }
 
 /**
+ * 设置服务端环境
+ * @author chinayin <whereismoney@qq.com>
+ */
+$APP_STATUS = getenv(ENV_PREFIX . strtoupper(str_replace('.', '_', 'app_status')));
+empty($APP_STATUS) && $APP_STATUS = '';
+define('APP_STATUS', strtolower($APP_STATUS));
+if (!in_array(APP_STATUS, ['dev', 'testing', 'production'], true)) {
+//    die('Failed, APP_STATUS_ERROR');
+}
+define('IS_PRODUCTION', APP_STATUS === 'production');
+
+/**
  * 生成并设置 request_id.
  * @author chinayin <whereismoney@qq.com>
  */
