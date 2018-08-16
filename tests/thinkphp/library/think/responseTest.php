@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Response测试
+ * Response测试.
+ *
  * @author    大漠 <zhylninc@gmail.com>
  */
 
@@ -22,9 +24,7 @@ use think\Response;
 
 class responseTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
-     *
      * @var \think\Response
      */
     protected $object;
@@ -75,21 +75,21 @@ class responseTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers think\Response::send
+     *
      * @todo Implement testSend().
      */
     public function testSend()
     {
-        $dataArr        = [];
-        $dataArr["key"] = "value";
+        $dataArr = [];
+        $dataArr['key'] = 'value';
 
         $response = Response::create($dataArr, 'json');
-        $result   = $response->getContent();
+        $result = $response->getContent();
         $this->assertEquals('{"key":"value"}', $result);
         $request = Request::instance();
         $request->get(['callback' => 'callback']);
         $response = Response::create($dataArr, 'jsonp');
-        $result   = $response->getContent();
+        $result = $response->getContent();
         $this->assertEquals('callback({"key":"value"});', $result);
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Redis缓存驱动测试
+ * Redis缓存驱动测试.
+ *
  * @author    7IN0SAN9 <me@7in0.me>
  */
 
@@ -22,10 +24,10 @@ class redisTest extends cacheTestCase
 
     protected function setUp()
     {
-        if (!extension_loaded("redis")) {
-            $this->markTestSkipped("Redis没有安装，已跳过测试！");
+        if (!extension_loaded('redis')) {
+            $this->markTestSkipped('Redis没有安装，已跳过测试！');
         }
-        \think\Cache::connect(array('type' => 'redis', 'expire' => 2));
+        \think\Cache::connect(['type' => 'redis', 'expire' => 2]);
     }
 
     protected function getCacheInstance()
@@ -33,6 +35,7 @@ class redisTest extends cacheTestCase
         if (null === $this->_cacheInstance) {
             $this->_cacheInstance = new \think\cache\driver\Redis(['length' => 3]);
         }
+
         return $this->_cacheInstance;
     }
 

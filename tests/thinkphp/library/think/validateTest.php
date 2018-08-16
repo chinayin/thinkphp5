@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,7 @@
 // +----------------------------------------------------------------------
 
 /**
- * Validate类测试
+ * Validate类测试.
  */
 
 namespace tests\thinkphp\library\think;
@@ -20,7 +21,6 @@ use think\Validate;
 
 class validateTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testCheck()
     {
         $rule = [
@@ -41,7 +41,7 @@ class validateTest extends \PHPUnit_Framework_TestCase
             'email' => 'thinkphp@qq.com',
         ];
         $validate = new Validate($rule, $msg);
-        $result   = $validate->check($data);
+        $result = $validate->check($data);
         $this->assertEquals(true, $result);
     }
 
@@ -93,12 +93,14 @@ class validateTest extends \PHPUnit_Framework_TestCase
             'city'       => '上海',
             'nickname'   => '流年ThinkPHP_2016',
             'aliasname'  => '流年Think2016',
-            'file'       => new File(THINK_PATH . 'base.php'),
-            'image'      => new File(THINK_PATH . 'logo.png'),
+            'file'       => new File(THINK_PATH.'base.php'),
+            'image'      => new File(THINK_PATH.'logo.png'),
             'test'       => 'test',
         ];
         $validate = new Validate($rule);
-        $validate->extend('test', function ($value) {return 'test' == $value ? true : false;});
+        $validate->extend('test', function ($value) {
+            return 'test' == $value ? true : false;
+        });
         $validate->rule('zip', '/^\d{6}$/');
         $validate->rule([
             'ok'   => 'require|accepted',
@@ -141,9 +143,13 @@ class validateTest extends \PHPUnit_Framework_TestCase
     public function testExtend()
     {
         $validate = new Validate(['name' => 'check:1']);
-        $validate->extend('check', function ($value, $rule) {return $rule == $value ? true : false;});
-        $validate->extend(['check' => function ($value, $rule) {return $rule == $value ? true : false;}]);
-        $data   = ['name' => 1];
+        $validate->extend('check', function ($value, $rule) {
+            return $rule == $value ? true : false;
+        });
+        $validate->extend(['check' => function ($value, $rule) {
+            return $rule == $value ? true : false;
+        }]);
+        $data = ['name' => 1];
         $result = $validate->check($data);
         $this->assertEquals(true, $result);
     }
@@ -196,5 +202,4 @@ class validateTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
         $this->assertEquals(['name' => '名称必须', 'sex' => '性别错误'], $validate->getError());
     }
-
 }

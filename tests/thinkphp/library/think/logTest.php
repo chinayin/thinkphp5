@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,16 +11,17 @@
 // +----------------------------------------------------------------------
 
 /**
- * Log测试
+ * Log测试.
+ *
  * @author    liu21st <liu21st@gmail.com>
  */
+
 namespace tests\thinkphp\library\think;
 
 use think\Log;
 
 class logTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testSave()
     {
         Log::init(['type' => 'test']);

@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Url测试
+ * Url测试.
+ *
  * @author    liu21st <liu21st@gmail.com>
  */
 
@@ -27,7 +29,7 @@ class urlTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        Route::rules(['get' => [],
+        Route::rules(['get'     => [],
             'post'              => [],
             'put'               => [],
             'delete'            => [],
@@ -38,13 +40,12 @@ class urlTest extends \PHPUnit_Framework_TestCase
             'alias'             => [],
             'domain'            => [],
             'pattern'           => [],
-            'name'              => []]);
+            'name'              => [], ]);
         Route::name([]);
     }
 
     public function testBuildModule()
     {
-
         Route::get('blog/:name', 'index/blog');
         Route::get('blog/:id', 'index/blog');
         Config::set('pathinfo_depr', '/');
@@ -102,7 +103,7 @@ class urlTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/blog/10.shtml#detail', Url::build('index/blog#detail', 'id=10'));
 
         Config::set('url_common_param', true);
-        $this->assertEquals('/blog/10.shtml?foo=bar#detail', Url::build('index/blog#detail', "id=10&foo=bar"));
+        $this->assertEquals('/blog/10.shtml?foo=bar#detail', Url::build('index/blog#detail', 'id=10&foo=bar'));
     }
 
     public function testBuildDomain()
@@ -124,6 +125,5 @@ class urlTest extends \PHPUnit_Framework_TestCase
         Route::get('blog/:id', 'index/blog/read');
         Config::set('url_html_suffix', 'shtml');
         $this->assertEquals('/index.php/blog/10/name/thinkphp.shtml', Url::build('index/blog/read?id=10&name=thinkphp'));
-
     }
 }

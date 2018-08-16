@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Ini配置测试
+ * Ini配置测试.
+ *
  * @author    7IN0SAN9 <me@7in0.me>
  */
 
@@ -28,7 +30,7 @@ class iniTest extends \PHPUnit_Framework_TestCase
         Config::parse('inistring=1', 'ini');
         $this->assertEquals(1, Config::get('inistring'));
         Config::reset();
-        Config::parse(__DIR__ . '/fixtures/config.ini');
+        Config::parse(__DIR__.'/fixtures/config.ini');
         $this->assertTrue(Config::has('inifile'));
         $this->assertEquals(1, Config::get('inifile'));
         Config::reset();

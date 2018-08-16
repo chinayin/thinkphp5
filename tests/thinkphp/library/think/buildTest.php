@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * build测试
+ * build测试.
+ *
  * @author    刘志淳 <chun@engineer.com>
  */
 
@@ -47,26 +49,26 @@ class buildTest extends \PHPUnit_Framework_TestCase
         foreach ($build as $module => $list) {
             if ('__dir__' == $module || '__file__' == $module) {
                 foreach ($list as $file) {
-                    $this->assertFileExists(APP_PATH . $file);
+                    $this->assertFileExists(APP_PATH.$file);
                 }
             } else {
                 foreach ($list as $path => $moduleList) {
                     if ('__file__' == $path || '__dir__' == $path) {
                         foreach ($moduleList as $file) {
-                            $this->assertFileExists(APP_PATH . $module . '/' . $file);
+                            $this->assertFileExists(APP_PATH.$module.'/'.$file);
                         }
                     } else {
                         foreach ($moduleList as $file) {
                             if ('view' == $path) {
-                                $file_name = APP_PATH . $module . '/' . $path . '/' . $file . '.html';
+                                $file_name = APP_PATH.$module.'/'.$path.'/'.$file.'.html';
                             } else {
-                                $file_name = APP_PATH . $module . '/' . $path . '/' . $file . EXT;
+                                $file_name = APP_PATH.$module.'/'.$path.'/'.$file.EXT;
                             }
                             $this->assertFileExists($file_name);
                         }
                     }
                 }
-                $this->assertFileExists(APP_PATH . ($module ? $module . DS : '') . 'config.php');
+                $this->assertFileExists(APP_PATH.($module ? $module.DS : '').'config.php');
             }
         }
     }

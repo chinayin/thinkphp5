@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Session测试
+ * Session测试.
+ *
  * @author    大漠 <zhylninc@gmail.com>
  */
 
@@ -20,9 +22,7 @@ use think\Session;
 
 class sessionTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
-     *
      * @var \think\Session
      */
     protected $object;
@@ -36,8 +36,10 @@ class sessionTest extends \PHPUnit_Framework_TestCase
         // $this->object = new Session ();
         // register_shutdown_function ( function () {
         // } ); // 此功能无法取消，需要回调函数配合。
-        set_exception_handler(function () {});
-        set_error_handler(function () {});
+        set_exception_handler(function () {
+        });
+        set_error_handler(function () {
+        });
     }
 
     /**
@@ -135,7 +137,8 @@ class sessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * 单独重现异常
+     * 单独重现异常.
+     *
      * @expectedException \think\Exception
      */
     public function testException()

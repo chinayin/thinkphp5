@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Lite缓存驱动测试
+ * Lite缓存驱动测试.
+ *
  * @author    刘志淳 <chun@engineer.com>
  */
 
@@ -26,9 +28,9 @@ class liteTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * 测试缓存读取
-     * @return  mixed
-     * @access public
+     * 测试缓存读取.
+     *
+     * @return mixed
      */
     public function testGet()
     {
@@ -37,9 +39,9 @@ class liteTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * 测试缓存设置
-     * @return  mixed
-     * @access public
+     * 测试缓存设置.
+     *
+     * @return mixed
      */
     public function testSet()
     {
@@ -48,9 +50,9 @@ class liteTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * 删除缓存测试
-     * @return  mixed
-     * @access public
+     * 删除缓存测试.
+     *
+     * @return mixed
      */
     public function testRm()
     {
@@ -59,9 +61,9 @@ class liteTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * 清空缓存测试
-     * @return  mixed
-     * @access public
+     * 清空缓存测试.
+     *
+     * @return mixed
      */
     public function testClear()
     {

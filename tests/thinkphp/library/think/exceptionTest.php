@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * exception类测试
+ * exception类测试.
+ *
  * @author    Haotong Lin <lofanmi@gmail.com>
  */
 
@@ -22,7 +24,6 @@ use think\exception\HttpException;
 
 class MyException extends ThinkException
 {
-
 }
 
 class exceptionTest extends \PHPUnit_Framework_TestCase
@@ -30,7 +31,7 @@ class exceptionTest extends \PHPUnit_Framework_TestCase
     public function testGetHttpStatus()
     {
         try {
-            throw new HttpException(404, "Error Processing Request");
+            throw new HttpException(404, 'Error Processing Request');
         } catch (HttpException $e) {
             $this->assertEquals(404, $e->getStatusCode());
         }
@@ -39,11 +40,13 @@ class exceptionTest extends \PHPUnit_Framework_TestCase
     public function testDebugData()
     {
         $data = ['a' => 'b', 'c' => 'd'];
+
         try {
-            $e      = new MyException("Error Processing Request", 1);
+            $e = new MyException('Error Processing Request', 1);
             $method = new ReflectionMethod($e, 'setData');
             $method->setAccessible(true);
             $method->invokeArgs($e, ['test', $data]);
+
             throw $e;
         } catch (MyException $e) {
             $this->assertEquals(['test' => $data], $e->getData());

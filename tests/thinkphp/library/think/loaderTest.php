@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Loader测试
+ * Loader测试.
+ *
  * @author    liu21st <liu21st@gmail.com>
  */
 
@@ -20,7 +22,6 @@ use think\Loader;
 
 class loaderTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testAutoload()
     {
         $this->assertEquals(false, Loader::autoload('\think\Url'));
@@ -30,12 +31,12 @@ class loaderTest extends \PHPUnit_Framework_TestCase
 
     public function testAddClassMap()
     {
-        Loader::addClassMap('my\hello\Test', __DIR__ . DS . 'loader' . DS . 'Test.php');
+        Loader::addClassMap('my\hello\Test', __DIR__.DS.'loader'.DS.'Test.php');
     }
 
     public function testAddNamespace()
     {
-        Loader::addNamespace('top', __DIR__ . DS . 'loader' . DS);
+        Loader::addNamespace('top', __DIR__.DS.'loader'.DS);
         $this->assertEquals(true, Loader::autoload('top\test\Hello'));
     }
 

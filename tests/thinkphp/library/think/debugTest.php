@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Debug测试
+ * Debug测试.
+ *
  * @author    大漠 <zhylninc@gmail.com>
  */
 
@@ -27,7 +29,6 @@ class debugTest extends \PHPUnit_Framework_TestCase
     use ConfigInitTrait;
 
     /**
-     *
      * @var Debug
      */
     protected $object;
@@ -46,26 +47,29 @@ class debugTest extends \PHPUnit_Framework_TestCase
      * This method is called after a test is executed.
      */
     protected function tearDown()
-    {}
+    {
+    }
 
     /**
      * @covers \think\Debug::remark
+     *
      * @todo Implement testRemark().
      */
     public function testRemark()
     {
-        $name = "testremarkkey";
+        $name = 'testremarkkey';
         Debug::remark($name);
     }
 
     /**
      * @covers \think\Debug::getRangeTime
+     *
      * @todo Implement testGetRangeTime().
      */
     public function testGetRangeTime()
     {
-        $start = "testGetRangeTimeStart";
-        $end   = "testGetRangeTimeEnd";
+        $start = 'testGetRangeTimeStart';
+        $end = 'testGetRangeTimeEnd';
         Debug::remark($start);
         usleep(20000);
         // \think\Debug::remark($end);
@@ -77,6 +81,7 @@ class debugTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \think\Debug::getUseTime
+     *
      * @todo Implement testGetUseTime().
      */
     public function testGetUseTime()
@@ -87,6 +92,7 @@ class debugTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \think\Debug::getThroughputRate
+     *
      * @todo Implement testGetThroughputRate().
      */
     public function testGetThroughputRate()
@@ -98,53 +104,57 @@ class debugTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \think\Debug::getRangeMem
+     *
      * @todo Implement testGetRangeMem().
      */
     public function testGetRangeMem()
     {
-        $start = "testGetRangeMemStart";
-        $end   = "testGetRangeMemEnd";
+        $start = 'testGetRangeMemStart';
+        $end = 'testGetRangeMemEnd';
         Debug::remark($start);
-        $str = "";
+        $str = '';
         for ($i = 0; $i < 10000; $i++) {
-            $str .= "mem";
+            $str .= 'mem';
         }
 
         $rangeMem = Debug::getRangeMem($start, $end);
 
-        $this->assertLessThan(33, explode(" ", $rangeMem)[0]);
+        $this->assertLessThan(33, explode(' ', $rangeMem)[0]);
     }
 
     /**
      * @covers \think\Debug::getUseMem
+     *
      * @todo Implement testGetUseMem().
      */
     public function testGetUseMem()
     {
         $useMem = Debug::getUseMem();
 
-        $this->assertLessThan(35, explode(" ", $useMem)[0]);
+        $this->assertLessThan(35, explode(' ', $useMem)[0]);
     }
 
     /**
      * @covers \think\Debug::getMemPeak
+     *
      * @todo Implement testGetMemPeak().
      */
     public function testGetMemPeak()
     {
-        $start = "testGetMemPeakStart";
-        $end   = "testGetMemPeakEnd";
+        $start = 'testGetMemPeakStart';
+        $end = 'testGetMemPeakEnd';
         Debug::remark($start);
-        $str = "";
+        $str = '';
         for ($i = 0; $i < 100000; $i++) {
-            $str .= "mem";
+            $str .= 'mem';
         }
         $memPeak = Debug::getMemPeak($start, $end);
-        $this->assertLessThan(500, explode(" ", $memPeak)[0]);
+        $this->assertLessThan(500, explode(' ', $memPeak)[0]);
     }
 
     /**
      * @covers \think\Debug::getFile
+     *
      * @todo Implement testGetFile().
      */
     public function testGetFile()
@@ -156,11 +166,12 @@ class debugTest extends \PHPUnit_Framework_TestCase
         $info = Debug::getFile(true);
         $this->assertEquals(count(get_included_files()), count($info));
 
-        $this->assertContains("KB", $info[0]);
+        $this->assertContains('KB', $info[0]);
     }
 
     /**
      * @covers \think\Debug::dump
+     *
      * @todo Implement testDump().
      */
     public function testDump()
@@ -169,14 +180,14 @@ class debugTest extends \PHPUnit_Framework_TestCase
             return;
         }
 
-        $var        = [];
-        $var["key"] = "val";
-        $output     = Debug::dump($var, false, $label = "label");
-        $array      = explode("array", json_encode($output));
+        $var = [];
+        $var['key'] = 'val';
+        $output = Debug::dump($var, false, $label = 'label');
+        $array = explode('array', json_encode($output));
         if (IS_WIN) {
-            $this->assertEquals("(1) {\\n  [\\\"key\\\"] => string(3) \\\"val\\\"\\n}\\n\\r\\n\"", end($array));
+            $this->assertEquals('(1) {\\n  [\\"key\\"] => string(3) \\"val\\"\\n}\\n\\r\\n"', end($array));
         } elseif (strstr(PHP_OS, 'Darwin')) {
-            $this->assertEquals("(1) {\\n  [\\\"key\\\"] => string(3) \\\"val\\\"\\n}\\n\\n\"", end($array));
+            $this->assertEquals('(1) {\\n  [\\"key\\"] => string(3) \\"val\\"\\n}\\n\\n"', end($array));
         } else {
             $this->assertEquals("(1) {\\n  'key' =>\\n  string(3) \\\"val\\\"\\n}\\n\\n\"", end($array));
         }
@@ -190,7 +201,7 @@ class debugTest extends \PHPUnit_Framework_TestCase
         Config::set('trace', ['type' => 'NullDebug']);
 
         $response = new Response();
-        $context  = 'TestWithErrorType';
+        $context = 'TestWithErrorType';
 
         Debug::inject($response, $context);
     }
@@ -200,20 +211,20 @@ class debugTest extends \PHPUnit_Framework_TestCase
         Config::set('trace', ['type' => 'Console']);
 
         $response = new Response();
-        $context  = 'TestWithoutBodyTag';
+        $context = 'TestWithoutBodyTag';
         Debug::inject($response, $context);
         $this->assertNotEquals('TestWithoutBodyTag', $context);
         $this->assertStringStartsWith('TestWithoutBodyTag', $context);
 
         $response = new Response();
-        $context  = '<body></body>';
+        $context = '<body></body>';
         Debug::inject($response, $context);
         $this->assertNotEquals('<body></body>', $context);
         $this->assertStringStartsWith('<body>', $context);
         $this->assertStringEndsWith('</body>', $context);
 
         $response = new Redirect();
-        $context  = '<body></body>';
+        $context = '<body></body>';
         Debug::inject($response, $context);
         $this->assertEquals('<body></body>', $context);
     }

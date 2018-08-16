@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * 缓存抽象类，提供一些测试
+ * 缓存抽象类，提供一些测试.
+ *
  * @author simon <mahuan@d1web.top>
  */
 
@@ -20,15 +22,13 @@ use think\Cache;
 
 abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
 {
-
     /**
-     * 获取缓存句柄，子类必须有
-     * @access protected
+     * 获取缓存句柄，子类必须有.
      */
     abstract protected function getCacheInstance();
 
     /**
-     * tearDown函数
+     * tearDown函数.
      */
     protected function tearDown()
     {
@@ -36,8 +36,8 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * 设定一组测试值，包括测试字符串、整数、数组和对象
-     * @return  mixed
-     * @access public
+     *
+     * @return mixed
      */
     public function prepare()
     {
@@ -46,13 +46,14 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
         $cache->set('string_test', 'string_test');
         $cache->set('number_test', 11);
         $cache->set('array_test', ['array_test' => 'array_test']);
+
         return $cache;
     }
 
     /**
      * 测试缓存设置，包括测试字符串、整数、数组和对象
-     * @return  mixed
-     * @access public
+     *
+     * @return mixed
      */
     public function testSet()
     {
@@ -63,9 +64,9 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * 测试缓存自增
-     * @return  mixed
-     * @access public
+     * 测试缓存自增.
+     *
+     * @return mixed
      */
     public function testInc()
     {
@@ -74,9 +75,9 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * 测试缓存自减
-     * @return  mixed
-     * @access public
+     * 测试缓存自减.
+     *
+     * @return mixed
      */
     public function testDec()
     {
@@ -86,8 +87,8 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * 测试缓存读取，包括测试字符串、整数、数组和对象
-     * @return  mixed
-     * @access public
+     *
+     * @return mixed
      */
     public function testGet()
     {
@@ -104,8 +105,8 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * 测试缓存存在情况，包括测试字符串、整数、数组和对象
-     * @return  mixed
-     * @access public
+     *
+     * @return mixed
      */
     public function testExists()
     {
@@ -117,8 +118,8 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * 测试缓存不存在情况，包括测试字符串、整数、数组和对象
-     * @return  mixed
-     * @access public
+     *
+     * @return mixed
      */
     public function testGetNonExistent()
     {
@@ -128,8 +129,8 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * 测试特殊值缓存，包括测试字符串、整数、数组和对象
-     * @return  mixed
-     * @access public
+     *
+     * @return mixed
      */
     public function testStoreSpecialValues()
     {
@@ -140,9 +141,9 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * 缓存过期测试
-     * @return  mixed
-     * @access public
+     * 缓存过期测试.
+     *
+     * @return mixed
      */
     public function testExpire()
     {
@@ -155,9 +156,9 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * 删除缓存测试
-     * @return  mixed
-     * @access public
+     * 删除缓存测试.
+     *
+     * @return mixed
      */
     public function testDelete()
     {
@@ -167,9 +168,9 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * 获取并删除缓存测试
-     * @return  mixed
-     * @access public
+     * 获取并删除缓存测试.
+     *
+     * @return mixed
      */
     public function testPull()
     {
@@ -179,9 +180,9 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * 清空缓存测试
-     * @return  mixed
-     * @access public
+     * 清空缓存测试.
+     *
+     * @return mixed
      */
     public function testClear()
     {
@@ -203,5 +204,4 @@ abstract class cacheTestCase extends \PHPUnit_Framework_TestCase
         $this->assertNotNull(Cache::rm('a'));
         $this->assertNotNull(Cache::clear());
     }
-
 }

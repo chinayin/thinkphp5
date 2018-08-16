@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Memcached缓存驱动测试
+ * Memcached缓存驱动测试.
+ *
  * @author    7IN0SAN9 <me@7in0.me>
  */
 
@@ -19,16 +21,18 @@ namespace tests\thinkphp\library\think\cache\driver;
 class memcachedTest extends cacheTestCase
 {
     private $_cacheInstance = null;
+
     /**
-     * 基境缓存类型
+     * 基境缓存类型.
      */
     protected function setUp()
     {
-        if (!extension_loaded("memcached") && !extension_loaded('memcache')) {
-            $this->markTestSkipped("Memcached或Memcache没有安装，已跳过测试！");
+        if (!extension_loaded('memcached') && !extension_loaded('memcache')) {
+            $this->markTestSkipped('Memcached或Memcache没有安装，已跳过测试！');
         }
-        \think\Cache::connect(array('type' => 'memcached', 'expire' => 2));
+        \think\Cache::connect(['type' => 'memcached', 'expire' => 2]);
     }
+
     /**
      * @return ApcCache
      */
@@ -37,12 +41,14 @@ class memcachedTest extends cacheTestCase
         if (null === $this->_cacheInstance) {
             $this->_cacheInstance = new \think\cache\driver\Memcached(['length' => 3]);
         }
+
         return $this->_cacheInstance;
     }
+
     /**
-     * 缓存过期测试《提出来测试，因为目前看通不过缓存过期测试，所以还需研究》
-     * @return  mixed
-     * @access public
+     * 缓存过期测试《提出来测试，因为目前看通不过缓存过期测试，所以还需研究》.
+     *
+     * @return mixed
      */
     public function testExpire()
     {
@@ -53,18 +59,18 @@ class memcachedTest extends cacheTestCase
     }
 
     /**
-     * 测试缓存自增
-     * @return  mixed
-     * @access public
+     * 测试缓存自增.
+     *
+     * @return mixed
      */
     public function testInc()
     {
     }
 
     /**
-     * 测试缓存自减
-     * @return  mixed
-     * @access public
+     * 测试缓存自减.
+     *
+     * @return mixed
      */
     public function testDec()
     {

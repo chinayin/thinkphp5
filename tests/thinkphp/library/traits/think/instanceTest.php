@@ -1,4 +1,5 @@
 <?php
+
 namespace tests\thinkphp\library\traits\think;
 
 use traits\think\Instance;
@@ -51,7 +52,7 @@ class InstanceTestFather
 
     protected static function _protectedStaticFunc($params)
     {
-        return 'protectedStaticFunc' . json_encode($params);
+        return 'protectedStaticFunc'.json_encode($params);
     }
 }
 

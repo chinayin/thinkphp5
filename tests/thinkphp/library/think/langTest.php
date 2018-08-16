@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Lang测试
+ * Lang测试.
+ *
  * @author    liu21st <liu21st@gmail.com>
  */
 
@@ -21,7 +23,6 @@ use think\Lang;
 
 class langTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testSetAndGet()
     {
         Lang::set('hello,%s', '欢迎,%s');
@@ -39,15 +40,14 @@ class langTest extends \PHPUnit_Framework_TestCase
 
     public function testLoad()
     {
-        Lang::load(__DIR__ . DS . 'lang' . DS . 'lang.php');
+        Lang::load(__DIR__.DS.'lang'.DS.'lang.php');
         $this->assertEquals('加载', Lang::get('load'));
-        Lang::load(__DIR__ . DS . 'lang' . DS . 'lang.php', 'test');
+        Lang::load(__DIR__.DS.'lang'.DS.'lang.php', 'test');
         $this->assertEquals('加载', Lang::get('load', [], 'test'));
     }
 
     public function testDetect()
     {
-
         Config::set('lang_list', ['zh-cn', 'zh-tw']);
         Lang::set('hello', '欢迎', 'zh-cn');
         Lang::set('hello', '歡迎', 'zh-tw');
@@ -62,7 +62,6 @@ class langTest extends \PHPUnit_Framework_TestCase
         $_GET['lang'] = 'zh-cn';
         Lang::detect();
         $this->assertEquals('欢迎', Lang::get('hello'));
-
     }
 
     public function testRange()

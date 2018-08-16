@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Cookie测试
+ * Cookie测试.
+ *
  * @author    Haotong Lin <lofanmi@gmail.com>
  */
 
@@ -42,7 +44,7 @@ class cookieTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $reflectedClass          = new ReflectionClass('\think\Cookie');
+        $reflectedClass = new ReflectionClass('\think\Cookie');
         $reflectedPropertyConfig = $reflectedClass->getProperty('config');
         $reflectedPropertyConfig->setAccessible(true);
         $reflectedPropertyConfig->setValue($this->default);
@@ -91,20 +93,20 @@ class cookieTest extends \PHPUnit_Framework_TestCase
 
         $name = 'name1';
         Cookie::set($name, $value, 10);
-        $this->assertEquals($value, $_COOKIE[$this->default['prefix'] . $name]);
+        $this->assertEquals($value, $_COOKIE[$this->default['prefix'].$name]);
 
         $name = 'name2';
         Cookie::set($name, $value, null);
-        $this->assertEquals($value, $_COOKIE[$this->default['prefix'] . $name]);
+        $this->assertEquals($value, $_COOKIE[$this->default['prefix'].$name]);
 
         $name = 'name3';
         Cookie::set($name, $value, 'expire=100&prefix=pre_');
-        $this->assertEquals($value, $_COOKIE['pre_' . $name]);
+        $this->assertEquals($value, $_COOKIE['pre_'.$name]);
 
-        $name  = 'name4';
+        $name = 'name4';
         $value = ['_test_中文_'];
         Cookie::set($name, $value);
-        $this->assertEquals('think:' . json_encode([urlencode('_test_中文_')]), $_COOKIE[$name]);
+        $this->assertEquals('think:'.json_encode([urlencode('_test_中文_')]), $_COOKIE[$name]);
     }
 
     public function testGet()
@@ -112,7 +114,7 @@ class cookieTest extends \PHPUnit_Framework_TestCase
         $_COOKIE = [
             'a'       => 'b',
             'pre_abc' => 'c',
-            'd'       => 'think:' . json_encode([urlencode('_test_中文_')]),
+            'd'       => 'think:'.json_encode([urlencode('_test_中文_')]),
         ];
         $this->assertEquals('b', Cookie::get('a'));
         $this->assertEquals(null, Cookie::get('does_not_exist'));

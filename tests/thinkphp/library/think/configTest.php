@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * 配置测试
+ * 配置测试.
+ *
  * @author    Haotong Lin <lofanmi@gmail.com>
  */
 
@@ -42,10 +44,10 @@ class configTest extends \PHPUnit_Framework_TestCase
 
     public function testLoad()
     {
-        $file   = APP_PATH . 'config' . EXT;
+        $file = APP_PATH.'config'.EXT;
         $config = array_change_key_case(include $file);
-        $name   = '_name_';
-        $range  = '_test_';
+        $name = '_name_';
+        $range = '_test_';
 
         $this->assertEquals($config, Config::load($file, $name, $range));
         $this->assertNotEquals(null, Config::load($file, $name, $range));
@@ -74,21 +76,21 @@ class configTest extends \PHPUnit_Framework_TestCase
     {
         $range = '_test_';
         call_user_func(self::$internalConfigFoo, [
-            $range => []
+            $range => [],
         ]);
         $this->assertEquals([], Config::get(null, $range));
         $this->assertEquals(null, Config::get(null, 'does_not_exist'));
         $value = 'value';
         // test getting configuration
         call_user_func(self::$internalConfigFoo, [
-            $range => ['abcd' => 'efg']
+            $range => ['abcd' => 'efg'],
         ]);
         $this->assertEquals('efg', Config::get('abcd', $range));
         $this->assertEquals(null, Config::get('does_not_exist', $range));
         $this->assertEquals(null, Config::get('abcd', 'does_not_exist'));
         // test getting configuration with dot syntax
         call_user_func(self::$internalConfigFoo, [
-            $range => ['one' => ['two' => $value]]
+            $range => ['one' => ['two' => $value]],
         ]);
         $this->assertEquals($value, Config::get('one.two', $range));
         $this->assertEquals(null, Config::get('one.does_not_exist', $range));
@@ -100,13 +102,13 @@ class configTest extends \PHPUnit_Framework_TestCase
         $range = '_test_';
 
         // without dot syntax
-        $name  = 'name';
+        $name = 'name';
         $value = 'value';
         Config::set($name, $value, $range);
         $config = call_user_func(self::$internalConfigFoo);
         $this->assertEquals($value, $config[$range][$name]);
         // with dot syntax
-        $name  = 'one.two';
+        $name = 'one.two';
         $value = 'dot value';
         Config::set($name, $value, $range);
         $config = call_user_func(self::$internalConfigFoo);

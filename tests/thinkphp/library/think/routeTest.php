@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Route测试
+ * Route测试.
+ *
  * @author    liu21st <liu21st@gmail.com>
  */
 
@@ -22,7 +24,6 @@ use think\Route;
 
 class routeTest extends \PHPUnit_Framework_TestCase
 {
-
     protected function setUp()
     {
         Config::set('app_multi_module', true);
@@ -79,7 +80,6 @@ class routeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['index', 'comment', 'read'], $result['module']);
         $result = Route::check($request, 'blog/8/comment/10/edit');
         $this->assertEquals(['index', 'comment', 'edit'], $result['module']);
-
     }
 
     public function testRest()
@@ -93,7 +93,6 @@ class routeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['index', 'blog', 'add'], $result['module']);
         $result = Route::check($request, 'res/8');
         $this->assertEquals(['index', 'blog', 'look'], $result['module']);
-
     }
 
     public function testMixVar()
@@ -282,6 +281,5 @@ class routeTest extends \PHPUnit_Framework_TestCase
         $rules = Route::rules('GET');
         Route::checkDomain($request, $rules);
         $this->assertEquals('\app\index\controller\blog', Route::getbind('class'));
-
     }
 }

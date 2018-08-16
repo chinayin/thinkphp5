@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * Xml配置测试
+ * Xml配置测试.
+ *
  * @author    7IN0SAN9 <me@7in0.me>
  */
 
@@ -28,7 +30,7 @@ class jsonTest extends \PHPUnit_Framework_TestCase
         Config::parse('{"jsonstring":1}', 'json');
         $this->assertEquals(1, Config::get('jsonstring'));
         Config::reset();
-        Config::parse(__DIR__ . '/fixtures/config.json');
+        Config::parse(__DIR__.'/fixtures/config.json');
         $this->assertTrue(Config::has('jsonstring'));
         $this->assertEquals(1, Config::get('jsonstring'));
         Config::reset();

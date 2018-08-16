@@ -1,4 +1,5 @@
 <?php
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -10,7 +11,8 @@
 // +----------------------------------------------------------------------
 
 /**
- * 控制器测试
+ * 控制器测试.
+ *
  * @author    Haotong Lin <lofanmi@gmail.com>
  */
 
@@ -21,7 +23,7 @@ use think\Controller;
 use think\Request;
 use think\View;
 
-require_once CORE_PATH . '../../helper.php';
+require_once CORE_PATH.'../../helper.php';
 
 class Foo extends Controller
 {
@@ -40,18 +42,21 @@ class Foo extends Controller
 
     public function fetchTest()
     {
-        $template = APP_PATH . 'views' . DS .'display.html';
+        $template = APP_PATH.'views'.DS.'display.html';
+
         return $this->fetch($template, ['name' => 'ThinkPHP']);
     }
 
     public function displayTest()
     {
-        $template = APP_PATH . 'views' . DS .'display.html';
+        $template = APP_PATH.'views'.DS.'display.html';
+
         return $this->display($template, ['name' => 'ThinkPHP']);
     }
+
     public function test()
     {
-        $data       = [
+        $data = [
             'username'   => 'username',
             'nickname'   => 'nickname',
             'password'   => '123456',
@@ -71,6 +76,7 @@ class Foo extends Controller
             ['sex', 'in:0,1', '性别只能为为男或女'],
             ['age', 'between:1,80', '年龄只能在10-80之间'],
         ];
+
         return $this->validate($data, $validate);
     }
 }
@@ -84,12 +90,14 @@ class Bar extends Controller
     public function action1()
     {
         $this->test += 2;
+
         return 'action1';
     }
 
     public function action2()
     {
         $this->test += 4;
+
         return 'action2';
     }
 }
@@ -108,24 +116,28 @@ class Baz extends Controller
     public function action1()
     {
         $this->test += 2;
+
         return 'action1';
     }
 
     public function action2()
     {
         $this->test += 4;
+
         return 'action2';
     }
 
     public function action3()
     {
         $this->test += 8;
+
         return 'action2';
     }
 
     public function action4()
     {
         $this->test += 16;
+
         return 'action2';
     }
 }
@@ -149,29 +161,30 @@ class controllerTest extends \PHPUnit_Framework_TestCase
 
     private function getView($controller)
     {
-        $view     = new View();
-        $rc       = new ReflectionClass(get_class($controller));
+        $view = new View();
+        $rc = new ReflectionClass(get_class($controller));
         $property = $rc->getProperty('view');
         $property->setAccessible(true);
         $property->setValue($controller, $view);
+
         return $view;
     }
 
     public function testFetch()
     {
-        $controller      = new Foo(Request::instance());
-        $view            = $this->getView($controller);
-        $template        = APP_PATH . 'views' . DS .'display.html';
-        $viewFetch       = $view->fetch($template, ['name' => 'ThinkPHP']);
+        $controller = new Foo(Request::instance());
+        $view = $this->getView($controller);
+        $template = APP_PATH.'views'.DS.'display.html';
+        $viewFetch = $view->fetch($template, ['name' => 'ThinkPHP']);
         $this->assertEquals($controller->fetchTest(), $viewFetch);
     }
 
     public function testDisplay()
     {
-        $controller      = new Foo;
-        $view            = $this->getView($controller);
-        $template        = APP_PATH . 'views' . DS .'display.html';
-        $viewFetch       = $view->display($template, ['name' => 'ThinkPHP']);
+        $controller = new Foo();
+        $view = $this->getView($controller);
+        $template = APP_PATH.'views'.DS.'display.html';
+        $viewFetch = $view->display($template, ['name' => 'ThinkPHP']);
 
         $this->assertEquals($controller->displayTest(), $viewFetch);
     }
@@ -179,7 +192,7 @@ class controllerTest extends \PHPUnit_Framework_TestCase
     public function testAssign()
     {
         $controller = new Foo(Request::instance());
-        $view       = $this->getView($controller);
+        $view = $this->getView($controller);
         $controller->assignTest();
         $expect = ['abcd' => 'dcba', 'key1' => 'value1', 'key2' => 'value2'];
         $this->assertAttributeEquals($expect, 'data', $view);
