@@ -285,7 +285,10 @@ class Loader
         spl_autoload_register($autoload ?: 'think\\Loader::autoload', true, true);
 
         // Composer 自动加载支持
-        if (is_dir(VENDOR_PATH . 'composer')) {
+        if (is_dir(VENDOR_PATH . 'composer')
+        // 2018-08-20 通过composer运行phpunit后,不用继续加载composer
+            && !defined('PHPUNIT_COMPOSER_INSTALL')
+        ) {
             if (PHP_VERSION_ID >= 50600 && is_file(VENDOR_PATH . 'composer' . DS . 'autoload_static.php')) {
                 require VENDOR_PATH . 'composer' . DS . 'autoload_static.php';
 
