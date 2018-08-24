@@ -50,7 +50,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "5.0_dev"
+      "dev-master": "5.0-dev"
     }
   }
 }
