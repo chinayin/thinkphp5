@@ -78,6 +78,15 @@ function gen_request_id() {
     return $REQ_ARRS['sec'] . '-' . $REQ_ARRS['usec'] . '-' . substr(str_shuffle(str_repeat($pool, 6)), 0, 6);
 }
 
+/**
+ * 如存在nginx跟踪ID,直接带过来
+ * 如没有直接生成一个
+ * @author chinayin <whereismoney@qq.com>
+ */
+if (!IS_CLI && isset($_SERVER['TRACE_PHP_ID'])) {
+    define('TRACE_PHP_ID', $_SERVER['TRACE_PHP_ID']);
+    define('REQUEST_ID', TRACE_PHP_ID);
+}
 defined('REQUEST_ID') || define('REQUEST_ID', gen_request_id());
 if (!IS_CLI) {
     header('X-Request-Id: ' . REQUEST_ID);
