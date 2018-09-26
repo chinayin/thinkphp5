@@ -90,7 +90,7 @@ class Controller
                 $options['only'] = explode(',', $options['only']);
             }
 
-            if (!in_array($this->request->action(), $options['only'])) {
+            if (!in_array_case($this->request->action(), $options['only'])) {
                 return;
             }
         } elseif (isset($options['except'])) {
@@ -98,7 +98,7 @@ class Controller
                 $options['except'] = explode(',', $options['except']);
             }
 
-            if (in_array($this->request->action(), $options['except'])) {
+            if (in_array_case($this->request->action(), $options['except'])) {
                 return;
             }
         }
