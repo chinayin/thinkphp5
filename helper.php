@@ -587,3 +587,14 @@ if (!function_exists('collection')) {
         }
     }
 }
+
+if (!function_exists('in_array_case')) {
+    /**
+     * 不区分大小写的in_array实现.
+     * @param mixed $value
+     * @param mixed $array
+     */
+    function in_array_case($value,$array) {
+        return in_array(strtolower($value), array_map('strtolower', $array));
+    }
+}
