@@ -2,6 +2,7 @@
 
 namespace traits\model;
 
+use think\Collection;
 use think\db\Query;
 use think\Model;
 
@@ -115,7 +116,7 @@ trait BoolSoftDelete
         }
 
         // 包含软删除数据
-        $query = self::withTrashed();
+        $query = (new static())->db(false);
         if (is_array($data) && key($data) !== 0) {
             $query->where($data);
             $data = null;

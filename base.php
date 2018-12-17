@@ -9,7 +9,7 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-define('THINK_VERSION', '5.0.22');
+define('THINK_VERSION', '5.0.23');
 define('THINK_START_TIME', microtime(true));
 define('THINK_START_MEM', memory_get_usage());
 define('EXT', '.php');
@@ -83,7 +83,7 @@ function gen_request_id() {
  * 如没有直接生成一个
  * @author chinayin <whereismoney@qq.com>
  */
-if (!IS_CLI && isset($_SERVER['TRACE_PHP_ID'])) {
+if (!IS_CLI && isset($_SERVER['TRACE_PHP_ID']) && !empty($_SERVER['TRACE_PHP_ID'])) {
     define('TRACE_PHP_ID', $_SERVER['TRACE_PHP_ID']);
     define('REQUEST_ID', TRACE_PHP_ID);
 }
