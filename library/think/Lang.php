@@ -26,12 +26,12 @@ class Lang
     /**
      * @var string 语言自动侦测的变量
      */
-    protected static $langDetectVar = 'lang';
+    protected static $langDetectVar = 'locale';
 
     /**
      * @var string 语言 Cookie 变量
      */
-    protected static $langCookieVar = 'think_var';
+    protected static $langCookieVar = 'locale';
 
     /**
      * @var int 语言 Cookie 的过期时间

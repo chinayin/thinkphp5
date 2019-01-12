@@ -100,6 +100,13 @@ class App
             $config['lang_switch_on'] && Lang::detect();
             $request->langset(Lang::range());
 
+            // 2019-01-13 是否中文
+            $isLocaleChinese = true;
+            if ('zh' != substr($request->langset(), 0, 2)) {
+                $isLocaleChinese = false;
+            }
+            define('IS_LOCALE_CHINESE',$isLocaleChinese);
+
             // 加载系统语言包
             Lang::load([
                 THINK_PATH . 'lang' . DS . $request->langset() . EXT,
