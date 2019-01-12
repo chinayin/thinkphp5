@@ -593,8 +593,124 @@ if (!function_exists('in_array_case')) {
      * 不区分大小写的in_array实现.
      * @param mixed $value
      * @param mixed $array
+     * @return bool
      */
     function in_array_case($value,$array) {
         return in_array(strtolower($value), array_map('strtolower', $array));
+    }
+}
+
+/** 2019-01-12 新增时间毫秒函数 */
+if (!function_exists('microtime_float')) {
+    /**
+     * 获取当前时间戳，精确到毫秒.
+     */
+    function microtime_float()
+    {
+        list($msec, $sec) = explode(' ', microtime());
+
+        return sprintf('%.4f', $msec + $sec);
+    }
+}
+
+if (!function_exists('msectime')) {
+    /**
+     * 获取毫秒时间戳.
+     */
+    function msectime()
+    {
+        list($msec, $sec) = explode(' ', microtime());
+
+        return (float)sprintf('%.0f', ((float)$msec + (float)$sec) * 1000);
+    }
+}
+
+if (!function_exists('microtime_format')) {
+    /**
+     * 格式化时间戳，精确到毫秒，x代表毫秒
+     * ex: microtime_format('Y年m月d日 H时i分s秒 x毫秒', 1270626578.66000000).
+     *
+     * @param string $tag
+     * @param string $time
+     *
+     * @return mixed
+     */
+    function microtime_format($tag = 'Y-m-d H:i:s.x', $time = '')
+    {
+        empty($time) && $time = microtime_float();
+        //只要3位毫秒
+        $time = sprintf('%1$.3f', $time);
+        list($usec, $sec) = explode('.', $time);
+        $date = date($tag, $usec);
+
+        return str_replace('x', $sec, $date);
+    }
+}
+
+/** 2019-01-12 新增日志函数 */
+if (!function_exists('__LOG_MESSAGE')) {
+    /**
+     * 日志记录函数.
+     *
+     * @param       $data
+     * @param null  $key
+     * @param array $options
+     */
+    function __LOG_MESSAGE($data, $key = null, $options = [])
+    {
+        $defaultOptions = [
+            // 日志级别
+            'level' => \think\Log::INFO,
+            // 记录结果格式  默认json  可传array
+            'type' => null,
+            // 是否记录时间
+            'time' => true,
+        ];
+        $options = array_merge($defaultOptions, $options);
+        $string = '';
+        // 是否加载时间
+        if ($options['time']) {
+            $string .= '[' . microtime_format() . '] ';
+        }
+        // 显示key
+        if (!empty($key)) {
+            $string .= ($key . ' >> ');
+        }
+        // 显示内容
+        if ($data instanceof \Exception) {
+            $string .= sprintf('[ LOG_EXCEPTION_CODE = %s ] %s:%s >> %s' . PHP_EOL . '%s',
+                $data->getCode(),
+                $data->getFile(),
+                $data->getLine(),
+                __CLASS__,
+                $data->getMessage());
+        } elseif (is_array($data)) {
+            $string .= ((null !== $data && 'ARRAY' === strtoupper($options['type'])) ?
+                var_export($data, true) : json_encode($data, JSON_UNESCAPED_UNICODE));
+        } else {
+            $string .= $data;
+        }
+        unset($data);
+        trace($string, $options['level']);
+    }
+}
+
+
+if (!function_exists('__LOG_MESSAGE_ERROR')) {
+    function __LOG_MESSAGE_ERROR($data, $key = null, $options = [])
+    {
+        __LOG_MESSAGE($data, $key, [
+            'level' => \think\Log::ERROR,
+        ]);
+    }
+}
+
+
+if (!function_exists('__LOG_MESSAGE_DEBUG')) {
+    function __LOG_MESSAGE_DEBUG($data, $key = null, $options = [])
+    {
+        __LOG_MESSAGE($data, $key, [
+            'level' => \think\Log::DEBUG,
+        ]);
     }
 }
