@@ -198,6 +198,9 @@ class Lang
         } elseif (isset($_COOKIE[self::$langCookieVar])) {
             // Cookie 中设置了语言变量
             $langSet = strtolower($_COOKIE[self::$langCookieVar]);
+        } elseif (isset($_SERVER['HTTP_LOCALE'])) {
+            // Header 中设置了语言变量
+            $langSet = strtolower($_SERVER['HTTP_LOCALE']);
         } elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             // 自动侦测浏览器语言
             preg_match('/^([a-z\d\-]+)/i', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches);
