@@ -213,6 +213,9 @@ class Lang
                 $langSet = self::$acceptLanguage[$langSet];
             }
         }
+        // 2019-01-14 特殊处理 如果传递en转成en-us
+        if('en' === $langSet)
+            $langSet = 'en-us';
 
         // 合法的语言
         if (empty(self::$allowLangList) || in_array($langSet, self::$allowLangList)) {
