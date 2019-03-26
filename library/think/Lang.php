@@ -49,6 +49,11 @@ class Lang
     protected static $acceptLanguage = ['zh-hans-cn' => 'zh-cn'];
 
     /**
+     * @var array 转义别名语言
+     */
+    protected static $aliasLanguage = ['zh-hans' => 'zh-cn'];
+
+    /**
      * 设定当前的语言
      * @access public
      * @param  string $range 语言作用域
@@ -213,9 +218,15 @@ class Lang
                 $langSet = self::$acceptLanguage[$langSet];
             }
         }
+        // 2019-03-26 特殊处理 转移别名语言
+        if (isset(self::$aliasLanguage[$langSet])) {
+            $langSet = self::$aliasLanguage[$langSet];
+        }
+
         // 2019-01-14 特殊处理 如果传递en转成en-us
-        if('en' === $langSet)
+        if('en' === $langSet){
             $langSet = 'en-us';
+        }
 
         // 合法的语言
         if (empty(self::$allowLangList) || in_array($langSet, self::$allowLangList)) {
