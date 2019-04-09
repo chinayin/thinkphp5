@@ -231,6 +231,10 @@ class Lang
         // 合法的语言
         if (empty(self::$allowLangList) || in_array($langSet, self::$allowLangList)) {
             self::$range = $langSet ?: self::$range;
+        } elseif (!empty($langSet) && !in_array($langSet,self::$allowLangList)) {
+            // 2019-04-09 如果不在语言包里 并且传递了语言标识 需要按照英文返回
+            $failureLang = Config::get('allow_lang_failure');
+            self::$range = $failureLang ?: self::$range;
         }
 
         return self::$range;

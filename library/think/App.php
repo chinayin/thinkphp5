@@ -94,6 +94,10 @@ class App
 
             $request->filter($config['default_filter']);
 
+            // 2019-04-09 增加allowLangList配置
+            if (isset($config['allow_lang_list']) && !empty($config['allow_lang_list'])) {
+                Lang::setAllowLangList($config['allow_lang_list']);
+            }
             // 默认语言
             Lang::range($config['default_lang']);
             // 开启多语言机制 检测当前语言
