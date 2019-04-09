@@ -51,7 +51,11 @@ class Lang
     /**
      * @var array 转义别名语言
      */
-    protected static $aliasLanguage = ['zh-hans' => 'zh-cn'];
+    protected static $aliasLanguage = [
+        'zh-hans' => 'zh-cn',
+        'zh' => 'zh-cn',
+        'en' => 'en-us',
+    ];
 
     /**
      * 设定当前的语言
@@ -221,11 +225,6 @@ class Lang
         // 2019-03-26 特殊处理 转移别名语言
         if (isset(self::$aliasLanguage[$langSet])) {
             $langSet = self::$aliasLanguage[$langSet];
-        }
-
-        // 2019-01-14 特殊处理 如果传递en转成en-us
-        if('en' === $langSet){
-            $langSet = 'en-us';
         }
 
         // 合法的语言
