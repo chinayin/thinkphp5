@@ -111,6 +111,29 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     // 关联自动写入
     protected $relationWrite;
 
+    // 2019-06-11 分表配置
+    protected $partition;
+
+    // 分表配置样例 mod0是存在0的取模
+//    protected $partition = [
+//        // 分表方式
+//        'type' => 'mod0',
+//        // 分表数量
+//        'num' => 10,
+//        // 分表依据的字段
+//        'field' => 'cust_id',
+//    ];
+
+    /**
+     * 获取分表配置
+     * @access public
+     * @return Model
+     */
+    public function getPartition()
+    {
+        return $this->partition;
+    }
+
     /**
      * 初始化过的模型.
      *

@@ -387,6 +387,10 @@ class Query
                     // 按照id的模数分表
                     $seq = ($value % $rule['num']) + 1;
                     break;
+                case 'mod0':
+                    // 按照id的模数分表
+                    $seq = ($value % $rule['num']) + 0;
+                    break;
                 case 'md5':
                     // 按照md5的序列分表
                     $seq = (ord(substr(md5($value), 0, 1)) % $rule['num']) + 1;
@@ -1010,14 +1014,26 @@ class Query
 
     /**
      * 设置分表规则
+     * 2019-06-11 分表特殊设置
+     * 当model中配置了$partition,优先走配置
+     * 当不传$field 同时$data配置了非数组 直接分表
      * @access public
      * @param array  $data  操作的数据
      * @param string $field 分表依据的字段
      * @param array  $rule  分表规则
      * @return $this
      */
-    public function partition($data, $field, $rule = [])
+    public function partition($data, $field = null, $rule = [])
     {
+        // 2019-06-11 分表特殊设置
+        if (empty($rule) && !empty($this->model->getPartition())) {
+            $rule = $this->model->getPartition();
+        }
+        // 2019-06-11 分表数据配置
+        if (null === $field) {
+            $field = isset($rule['field']) ? $rule['field'] : '';
+            $data = [$field => $data];
+        }
         $this->options['table'] = $this->getPartitionTableName($data, $field, $rule);
         return $this;
     }
