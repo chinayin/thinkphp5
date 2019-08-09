@@ -383,6 +383,12 @@ class Query
                     }
                     $seq = date('Y', $value) - $rule['expr'] + 1;
                     break;
+                case 'quarter':
+                    //按季度分表
+                    $year = date('Y');
+                    $quarter = ceil((date('n')) / 3);
+                    $seq = (int) ($year . $quarter);
+                    break;
                 case 'mod':
                     // 按照id的模数分表
                     $seq = ($value % $rule['num']) + 1;
