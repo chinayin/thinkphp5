@@ -46,7 +46,13 @@ class Lang
     /**
      * @var array Accept-Language 转义为对应语言包名称 系统默认配置
      */
-    protected static $acceptLanguage = ['zh-hans-cn' => 'zh-cn'];
+    protected static $acceptLanguage = [
+        'zh-hans-cn' => 'zh-cn',
+        'zh-hant-cn' => 'zh-hk',
+        'zh-hant-hk' => 'zh-hk',
+        'zh-hant-mo' => 'zh-hk',
+        'zh-hant-tw' => 'zh-tw',
+    ];
 
     /**
      * @var array 转义别名语言
@@ -55,12 +61,16 @@ class Lang
         'zh-hans' => 'zh-cn',
         'zh' => 'zh-cn',
         'en' => 'en-us',
+        'zh-hant' => 'zh-hk',
     ];
 
     /**
      * 设定当前的语言
+     *
      * @access public
+     *
      * @param  string $range 语言作用域
+     *
      * @return string
      */
     public static function range($range = '')
@@ -74,10 +84,13 @@ class Lang
 
     /**
      * 设置语言定义(不区分大小写)
+     *
      * @access public
-     * @param  string|array  $name  语言变量
-     * @param  string        $value 语言值
-     * @param  string        $range 语言作用域
+     *
+     * @param  string|array $name  语言变量
+     * @param  string       $value 语言值
+     * @param  string       $range 语言作用域
+     *
      * @return mixed
      */
     public static function set($name, $value = null, $range = '')
@@ -97,15 +110,18 @@ class Lang
 
     /**
      * 加载语言定义(不区分大小写)
+     *
      * @access public
-     * @param  array|string $file 语言文件
-     * @param  string $range      语言作用域
+     *
+     * @param  array|string $file  语言文件
+     * @param  string       $range 语言作用域
+     *
      * @return mixed
      */
     public static function load($file, $range = '')
     {
         $range = $range ?: self::$range;
-        $file  = is_string($file) ? [$file] : $file;
+        $file = is_string($file) ? [$file] : $file;
 
         if (!isset(self::$lang[$range])) {
             self::$lang[$range] = [];
@@ -135,9 +151,12 @@ class Lang
 
     /**
      * 获取语言定义(不区分大小写)
+     *
      * @access public
+     *
      * @param  string|null $name  语言变量
      * @param  string      $range 语言作用域
+     *
      * @return mixed
      */
     public static function has($name, $range = '')
@@ -149,10 +168,13 @@ class Lang
 
     /**
      * 获取语言定义(不区分大小写)
+     *
      * @access public
+     *
      * @param  string|null $name  语言变量
      * @param  array       $vars  变量替换
      * @param  string      $range 语言作用域
+     *
      * @return mixed
      */
     public static function get($name = null, $vars = [], $range = '')
@@ -164,7 +186,7 @@ class Lang
             return self::$lang[$range];
         }
 
-        $key   = strtolower($name);
+        $key = strtolower($name);
         $value = isset(self::$lang[$range][$key]) ? self::$lang[$range][$key] : $name;
 
         // 变量解析
@@ -194,6 +216,7 @@ class Lang
 
     /**
      * 自动侦测设置获取语言选择
+     *
      * @access public
      * @return string
      */
@@ -213,7 +236,7 @@ class Lang
         } elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             // 自动侦测浏览器语言
             preg_match('/^([a-z\d\-]+)/i', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches);
-            $langSet     = strtolower($matches[1]);
+            $langSet = strtolower($matches[1]);
             $acceptLangs = Config::get('header_accept_lang');
 
             if (isset($acceptLangs[$langSet])) {
@@ -230,7 +253,7 @@ class Lang
         // 合法的语言
         if (empty(self::$allowLangList) || in_array($langSet, self::$allowLangList)) {
             self::$range = $langSet ?: self::$range;
-        } elseif (!empty($langSet) && !in_array($langSet,self::$allowLangList)) {
+        } elseif (!empty($langSet) && !in_array($langSet, self::$allowLangList)) {
             // 2019-04-09 如果不在语言包里 并且传递了语言标识 需要按照英文返回
             $failureLang = Config::get('allow_lang_failure');
             self::$range = $failureLang ?: self::$range;
@@ -241,8 +264,11 @@ class Lang
 
     /**
      * 设置语言自动侦测的变量
+     *
      * @access public
+     *
      * @param  string $var 变量名称
+     *
      * @return void
      */
     public static function setLangDetectVar($var)
@@ -252,8 +278,11 @@ class Lang
 
     /**
      * 设置语言的 cookie 保存变量
+     *
      * @access public
+     *
      * @param  string $var 变量名称
+     *
      * @return void
      */
     public static function setLangCookieVar($var)
@@ -263,8 +292,11 @@ class Lang
 
     /**
      * 设置语言的 cookie 的过期时间
+     *
      * @access public
+     *
      * @param  string $expire 过期时间
+     *
      * @return void
      */
     public static function setLangCookieExpire($expire)
@@ -274,8 +306,11 @@ class Lang
 
     /**
      * 设置允许的语言列表
+     *
      * @access public
+     *
      * @param  array $list 语言列表
+     *
      * @return void
      */
     public static function setAllowLangList($list)
