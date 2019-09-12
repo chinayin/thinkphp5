@@ -228,7 +228,7 @@ class File
             return json_encode($info, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\r\n";
         }
 
-        array_unshift($info, "---------------------------------------------------------------\r\n[{$info['timestamp']}] ".REQUEST_ID." {$requestInfo['ip']} {$requestInfo['method']} {$requestInfo['host']}{$requestInfo['uri']}");
+        array_unshift($info, "---------------------------------------------------------------\r\n[{$info['timestamp']}] ".REQUEST_ID.' mypid'.getmypid()." {$requestInfo['ip']} {$requestInfo['method']} {$requestInfo['host']}{$requestInfo['uri']}");
         unset($info['timestamp']);
 
         return implode("\r\n", $info) . "\r\n";
@@ -262,8 +262,9 @@ class File
                 $time_str   = '[运行时间：' . number_format($runtime, 6) . 's] [吞吐率：' . $reqs . 'req/s]';
                 $memory_str = ' [内存消耗：' . $memory_use . 'kb]';
                 $file_load  = ' [文件加载：' . count(get_included_files()) . ']';
+                $pid_str  = ' [进程ID：' . getmypid() . ']';
 
-                array_unshift($info, $time_str . $memory_str . $file_load);
+                array_unshift($info, $time_str . $memory_str . $file_load . $pid_str);
             }
         }
     }
