@@ -1469,11 +1469,11 @@ class Query
      *                            var_page:分页变量,
      *                            list_rows:每页数量
      *                            type:分页类名
-     * @param null|bool $isOnlyPaginate 是否只要page数据(true-只拿分页数据,false-只拿数据,null-默认)
+     * @param bool      $isOnlyPaginate 是否只拉Paginate数据
      * @return \think\Paginator
      * @throws DbException
      */
-    public function paginate($listRows = null, $simple = false, $config = [], $isOnlyPaginate = null)
+    public function paginate($listRows = null, $simple = false, $config = [], $isOnlyPaginate = false)
     {
         if (is_int($simple)) {
             $total  = $simple;
@@ -1504,19 +1504,19 @@ class Query
             unset($this->options['order'], $this->options['limit'], $this->options['page'], $this->options['field']);
 
             $bind    = $this->bind;
-            if (null === $isOnlyPaginate) {
+            // 只拉数量
+            if ($isOnlyPaginate) {
+                $total = $this->count();
+                $results = [];
+            } else {
                 $total = $this->count();
                 $results = $this->options($options)->bind($bind)->page($page, $listRows)->select();
-            } else {
-                $total = $isOnlyPaginate ? $this->count() : null;
-                $results = $isOnlyPaginate ? [] : $this->options($options)->bind($bind)->page($page,
-                    $listRows)->select();
             }
         } elseif ($simple) {
-            $results = $isOnlyPaginate ? [] : $this->limit(($page - 1) * $listRows, $listRows + 1)->select();
+            $results = $this->limit(($page - 1) * $listRows, $listRows + 1)->select();
             $total   = null;
         } else {
-            $results = $isOnlyPaginate ? [] : $this->page($page, $listRows)->select();
+            $results = $this->page($page, $listRows)->select();
         }
         return $class::make($results, $listRows, $page, $total, $simple, $config);
     }
