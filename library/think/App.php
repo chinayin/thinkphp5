@@ -111,7 +111,7 @@ class App
             // 2019-01-13 是否中文
             // 2019-09-25 是否简体中文 繁体中文 zh-hk或zh-tw 开头 这里需要调整
             $isLocaleChinese = true;
-            if ('zh-cn' === Lang::range()) {
+            if ('zh-cn' !== Lang::range()) {
                 $isLocaleChinese = false;
             }
             define('IS_LOCALE_CHINESE', $isLocaleChinese);
