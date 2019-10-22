@@ -315,7 +315,12 @@ abstract class Connection
      */
     public function free()
     {
-        $this->PDOStatement = null;
+        try {
+            $this->PDOStatement = null;
+        } catch (\Exception $e) {
+            Log::write("an error when free PDOStatement maybe mysql gone away, (" .$e->getCode().') ' . $e->getMessage(),
+                Log::DEBUG);
+        }
     }
 
     /**
