@@ -128,6 +128,26 @@ class Debug
     }
 
     /**
+     * 统计从开始到统计时的内存峰值使用情况
+     * @access public
+     * @param  integer $dec 小数位
+     * @return string
+     */
+    public static function getUsePeakMem($dec = 2)
+    {
+        $size = memory_get_peak_usage() - THINK_START_MEM;
+        $a = ['B', 'KB', 'MB', 'GB', 'TB'];
+        $pos = 0;
+
+        while ($size >= 1024) {
+            $size /= 1024;
+            $pos++;
+        }
+
+        return round($size, $dec) . " " . $a[$pos];
+    }
+
+    /**
      * 统计区间的内存峰值情况
      * @access public
      * @param  string  $start 开始标签
