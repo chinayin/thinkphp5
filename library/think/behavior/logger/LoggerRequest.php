@@ -78,7 +78,8 @@ class LoggerRequest
         $filename = $this->getLogFile();
         $dir = dirname($filename);
         is_dir($dir) || @mkdir($dir, 0755, true);
-        return error_log($message . "\r\n", 3, $filename);
+        $f = @error_log($message . "\r\n", 3, $filename);
+        return $f;
     }
 
     /**
