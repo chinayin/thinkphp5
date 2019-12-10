@@ -77,7 +77,7 @@ class LoggerRequest
     {
         $filename = $this->getLogFile();
         $dir = dirname($filename);
-        is_dir($dir) || mkdir($dir, 0755, true);
+        is_dir($dir) || @mkdir($dir, 0755, true);
         return error_log($message . "\r\n", 3, $filename);
     }
 
@@ -86,7 +86,7 @@ class LoggerRequest
      *
      * @return string
      */
-    private function buildLoggerData(): string
+    private function buildLoggerData()
     {
         // v1   version|reqid|time|use_time|use_peak_mem|ip|method|host|uri|lang|pid|hostname
         $version = $this->options['version'];
