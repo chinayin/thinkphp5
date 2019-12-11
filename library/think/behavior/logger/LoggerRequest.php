@@ -61,7 +61,9 @@ class LoggerRequest
      */
     private function getLogFile()
     {
-        $filename = date('Y') . DIRECTORY_SEPARATOR . date('Ymd') . DIRECTORY_SEPARATOR . date('H') . '.log';
+        // 2019-12-11 防止挂载nas时出现文件内容写覆盖,加一个机器名区分
+        $hostSuffix = true ? ('_' . gethostname()) : '';
+        $filename = date('Y') . DIRECTORY_SEPARATOR . date('Ymd') . DIRECTORY_SEPARATOR . date('H') . $hostSuffix . '.log';
         $destination = rtrim($this->options['path'], '/') . '/' . $filename;
         return $destination;
     }
