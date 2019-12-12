@@ -21,6 +21,8 @@ class LoggerRequest
         'disable' => false,
         /** 数据版本 */
         'version' => 1,
+        /** 是否nas */
+        'nas' => false,
         /** 保存路径 */
         'path' => RUNTIME_PATH . 'logger',
         /** 忽略Controller */
@@ -79,8 +81,11 @@ class LoggerRequest
     {
         $filename = $this->getLogFile();
         $dir = dirname($filename);
-        // 2019-12-12 因nas权限限制,故创建目录权限需要777
-        is_dir($dir) || @mkdir($dir, 0777, true);
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0755, true);
+            // 2019-12-12 因nas权限限制,故创建目录权限需要777
+            $this->options['nas'] && @chmod($dir, 0777);
+        }
         $f = @error_log($message . "\r\n", 3, $filename);
         return $f;
     }
