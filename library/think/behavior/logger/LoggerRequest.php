@@ -98,7 +98,7 @@ class LoggerRequest
         $data[] = REQUEST_ID;
         $data[] = microtime_float();
         $data[] = Debug::getUseTime(3);
-        $data[] = round((memory_get_peak_usage() - THINK_START_MEM) / 1024, 3);
+        $data[] = round((memory_get_peak_usage() - THINK_START_MEM) / 1024, 0);
         $data[] = $this->request->ip();
         $data[] = $this->request->method();
         $data[] = $this->request->host();

@@ -609,7 +609,7 @@ if (!function_exists('microtime_float')) {
     {
         list($msec, $sec) = explode(' ', microtime());
 
-        return sprintf('%.4f', $msec + $sec);
+        return sprintf('%.3f', $msec + $sec);
     }
 }
 
