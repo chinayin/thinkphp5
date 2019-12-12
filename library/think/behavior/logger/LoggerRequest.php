@@ -79,7 +79,8 @@ class LoggerRequest
     {
         $filename = $this->getLogFile();
         $dir = dirname($filename);
-        is_dir($dir) || @mkdir($dir, 0755, true);
+        // 2019-12-12 因nas权限限制,故创建目录权限需要777
+        is_dir($dir) || @mkdir($dir, 0777, true);
         $f = @error_log($message . "\r\n", 3, $filename);
         return $f;
     }
