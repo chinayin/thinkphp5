@@ -58,29 +58,44 @@ if (is_file(ROOT_PATH . '.env')) {
 
 /**
  * 设置服务端环境
+ *
  * @author chinayin <whereismoney@qq.com>
  */
 $APP_STATUS = getenv(ENV_PREFIX . strtoupper(str_replace('.', '_', 'app_status')));
 empty($APP_STATUS) && $APP_STATUS = '';
 define('APP_STATUS', strtolower($APP_STATUS));
-if (!in_array(APP_STATUS, ['dev', 'testing', 'production'], true)) {
+if (!in_array(APP_STATUS, ['dev', 'testing', 'uat', 'production'], true)) {
 //    die('Failed, APP_STATUS_ERROR');
 }
+// 是否正式环境
 define('IS_PRODUCTION', APP_STATUS === 'production');
+// 是否预上线环境
+define('IS_UAT', APP_STATUS === 'uat');
+
+/**
+ * 判断是否内网vpc环境
+ */
+define('IS_PRIVATE_ZONE_SERVER', getenv('IS_PRIVATE_ZONE_SERVER') ? true : false);
 
 /**
  * 生成并设置 request_id.
+ *
  * @author chinayin <whereismoney@qq.com>
  */
-function gen_request_id() {
-    $REQ_ARRS = gettimeofday();
-    $pool = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
-    return $REQ_ARRS['sec'] . '-' . $REQ_ARRS['usec'] . '-' . substr(str_shuffle(str_repeat($pool, 6)), 0, 6);
+function gen_request_id()
+{
+    // 老的生成方式
+//    $REQ_ARRS = gettimeofday();
+//    $pool = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+//    return $REQ_ARRS['sec'] . '-' . $REQ_ARRS['usec'] . '-' . substr(str_shuffle(str_repeat($pool, 6)), 0, 6);
+    // 2020-01-14 新唯一id,取16位为了区分正式测试生成
+    return substr(md5(uniqid(rand(), true)), 8, 16);
 }
 
 /**
  * 如存在nginx跟踪ID,直接带过来
  * 如没有直接生成一个
+ *
  * @author chinayin <whereismoney@qq.com>
  */
 if (!IS_CLI && isset($_SERVER['TRACE_PHP_ID']) && !empty($_SERVER['TRACE_PHP_ID'])) {
