@@ -55,6 +55,11 @@ if (is_file(ROOT_PATH . '.env')) {
         }
     }
 }
+function is_true($val)
+{
+    $boolval = filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+    return ($boolval === null ? false : $boolval);
+}
 
 /**
  * 设置服务端环境
@@ -67,16 +72,18 @@ define('APP_STATUS', strtolower($APP_STATUS));
 if (!in_array(APP_STATUS, ['dev', 'testing', 'uat', 'production'], true)) {
 //    die('Failed, APP_STATUS_ERROR');
 }
-// 是否正式环境
+/**
+ * 是否正式环境
+ */
 define('IS_PRODUCTION', APP_STATUS === 'production');
-// 是否预上线环境
+/**
+ * 是否预上线环境
+ */
 define('IS_UAT', APP_STATUS === 'uat');
-
 /**
  * 判断是否内网vpc环境
  */
-define('IS_PRIVATE_ZONE_SERVER', getenv('IS_PRIVATE_ZONE_SERVER') ? true : false);
-
+define('IS_PRIVATE_ZONE_SERVER', is_true(getenv('IS_PRIVATE_ZONE_SERVER')));
 /**
  * 生成并设置 request_id.
  *
@@ -84,10 +91,6 @@ define('IS_PRIVATE_ZONE_SERVER', getenv('IS_PRIVATE_ZONE_SERVER') ? true : false
  */
 function gen_request_id()
 {
-    // 老的生成方式
-//    $REQ_ARRS = gettimeofday();
-//    $pool = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
-//    return $REQ_ARRS['sec'] . '-' . $REQ_ARRS['usec'] . '-' . substr(str_shuffle(str_repeat($pool, 6)), 0, 6);
     // 2020-01-14 新唯一id,取16位为了区分正式测试生成
     return substr(md5(uniqid(rand(), true)), 8, 16);
 }
