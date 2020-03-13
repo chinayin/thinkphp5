@@ -81,13 +81,21 @@ define('IS_PRODUCTION', APP_STATUS === 'production');
  */
 define('IS_UAT', APP_STATUS === 'uat');
 /**
- * 判断是否内网vpc环境
+ * 是否内网vpc环境
  */
 define('IS_PRIVATE_ZONE_SERVER', is_true(getenv('IS_PRIVATE_ZONE_SERVER')));
+define('DEPLOY_IS_VPC_ZONE', is_true(getenv('DEPLOY_IS_VPC_ZONE')));
+/**
+ * 是否是海外服务器部署
+ */
+define('DEPLOY_IS_ABROAD_ZONE', is_true(getenv('DEPLOY_IS_ABROAD_ZONE')));
+/**
+ * 服务器部署地域
+ */
+define('DEPLOY_REGION_ID', getenv('DEPLOY_REGION_ID') ?: '');
+define('DEPLOY_ZONE_ID', getenv('DEPLOY_ZONE_ID') ?: '');
 /**
  * 生成并设置 request_id.
- *
- * @author chinayin <whereismoney@qq.com>
  */
 function gen_request_id()
 {
