@@ -1981,7 +1981,7 @@ class Query
         if (!empty($this->pk)) {
             $pk = $this->pk;
         } else {
-            $pk = $this->getTableInfo(is_array($options) ? $options['table'] : $options, 'pk');
+            $pk = $this->getTableInfo(is_array($options) && isset($options['table']) ? $options['table'] : $options, 'pk');
         }
         return $pk;
     }

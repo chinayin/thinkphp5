@@ -378,8 +378,7 @@ class App
 
         $args = self::bindParams($reflect, $vars);
 
-        self::$debug && Log::record('[ RUN ] ' . $reflect->class . '->' . $reflect->name . '[ ' . $reflect->getFileName() . ' ]',
-            'info');
+        self::$debug && Log::record('[ RUN ] ' . $reflect->class . '->' . $reflect->name . '[ ' . $reflect->getFileName() . ' ]', 'info');
 
         return $reflect->invokeArgs(isset($class) ? $class : null, $args);
     }
