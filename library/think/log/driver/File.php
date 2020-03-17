@@ -150,13 +150,7 @@ class File
         $info['timestamp'] = date($this->config['time_format']);
 
         foreach ($message as $type => $msg) {
-            $msg = is_array($msg) ? implode("\r\n", $msg) : $msg;
-            if (PHP_SAPI == 'cli') {
-                $info['msg']  = $msg;
-                $info['type'] = $type;
-            } else {
-                $info[$type] = $msg;
-            }
+            $info[$type] = is_array($msg) ? implode("\r\n", $msg) : $msg;
         }
 
         if (PHP_SAPI == 'cli') {
