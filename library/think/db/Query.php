@@ -385,9 +385,10 @@ class Query
                     break;
                 case 'quarter':
                     //按季度分表
-                    $year = date('Y');
-                    $quarter = ceil((date('n')) / 3);
-                    $seq = (int) ($year . $quarter);
+                    if (!is_numeric($value)) {
+                        $value = strtotime($value);
+                    }
+                    $seq = date('Y', $value) . ceil((date('n', $value)) / 3);
                     break;
                 case 'mod':
                     // 按照id的模数分表
@@ -1036,9 +1037,9 @@ class Query
             $rule = $this->model->getPartition();
         }
         // 2019-06-11 分表数据配置
-        if (null === $field) {
-            $field = isset($rule['field']) ? $rule['field'] : '';
-            $data = [$field => $data];
+        if (null === $field && isset($rule['field'])) {
+            $field = $rule['field'];
+            is_array($data) or $data = [$field => $data];
         }
         $this->options['table'] = $this->getPartitionTableName($data, $field, $rule);
         return $this;
