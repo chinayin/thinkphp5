@@ -390,6 +390,13 @@ class Query
                     }
                     $seq = date('Y', $value) . ceil((date('n', $value)) / 3);
                     break;
+                case 'month':
+                    //按月份分表
+                    if (!is_numeric($value)) {
+                        $value = strtotime($value);
+                    }
+                    $seq = date('Ym', $value);
+                    break;
                 case 'mod':
                     // 按照id的模数分表
                     $seq = ($value % $rule['num']) + 1;
