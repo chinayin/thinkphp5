@@ -409,6 +409,14 @@ class Query
                     // 按照md5的序列分表
                     $seq = (ord(substr(md5($value), 0, 1)) % $rule['num']) + 1;
                     break;
+                case 'md50':
+                    // 按照md5的序列分表
+                    $seq = (ord(substr(md5($value), 0, 1)) % $rule['num']) + 0;
+                    break;
+                case 'crc32':
+                    // 按照crc32的模数分表
+                    $seq = (sprintf('%u',crc32($value)) % $rule['num']) + 0;
+                    break;
                 default:
                     if (function_exists($type)) {
                         // 支持指定函数哈希
