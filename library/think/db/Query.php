@@ -1039,10 +1039,14 @@ class Query
      * 2019-06-11 分表特殊设置
      * 当model中配置了$partition,优先走配置
      * 当不传$field 同时$data配置了非数组 直接分表
+     *
      * @access public
-     * @param array  $data  操作的数据
+     *
+     * @param   $data
+     *                      操作的数据
      * @param string $field 分表依据的字段
      * @param array  $rule  分表规则
+     *
      * @return $this
      */
     public function partition($data, $field = null, $rule = [])
