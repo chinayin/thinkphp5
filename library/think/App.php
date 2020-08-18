@@ -73,7 +73,7 @@ class App
      *
      * @access public
      *
-     * @param  Request $request 请求对象
+     * @param Request $request 请求对象
      *
      * @return Response
      * @throws Exception
@@ -113,6 +113,10 @@ class App
             $isLocaleChinese = true;
             if ('zh-cn' !== Lang::range()) {
                 $isLocaleChinese = false;
+            }
+            // 2020-08-18 繁体中文也算中文
+            if (in_array(Lang::range(), ['zh-hk', 'zh-tw'])) {
+                $isLocaleChinese = true;
             }
             define('IS_LOCALE_CHINESE', $isLocaleChinese);
             // 2019-09-25 增加语言表示常量
@@ -378,7 +382,8 @@ class App
 
         $args = self::bindParams($reflect, $vars);
 
-        self::$debug && Log::record('[ RUN ] ' . $reflect->class . '->' . $reflect->name . '[ ' . $reflect->getFileName() . ' ]', 'info');
+        self::$debug && Log::record('[ RUN ] ' . $reflect->class . '->' . $reflect->name . '[ ' . $reflect->getFileName() . ' ]',
+            'info');
 
         return $reflect->invokeArgs(isset($class) ? $class : null, $args);
     }
@@ -671,8 +676,8 @@ class App
      *
      * @access public
      *
-     * @param  \think\Request $request 请求实例
-     * @param  array          $config  配置信息
+     * @param \think\Request $request 请求实例
+     * @param array          $config  配置信息
      *
      * @return array
      * @throws \think\Exception
@@ -725,8 +730,8 @@ class App
      *
      * @access public
      *
-     * @param  bool $route 是否需要检测路由
-     * @param  bool $must  是否强制检测路由
+     * @param bool $route 是否需要检测路由
+     * @param bool $must  是否强制检测路由
      *
      * @return void
      */
