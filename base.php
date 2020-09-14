@@ -18,6 +18,13 @@ defined('THINK_PATH') or define('THINK_PATH', __DIR__ . DS);
 define('LIB_PATH', THINK_PATH . 'library' . DS);
 define('CORE_PATH', LIB_PATH . 'think' . DS);
 define('TRAIT_PATH', LIB_PATH . 'traits' . DS);
+/**
+ * docker中定义需要配置runtime目录
+ */
+define('DEPLOY_IS_DOCKER', is_true(getenv('DEPLOY_POD_NAME') ? 1 : 0));
+if (DEPLOY_IS_DOCKER && !defined('RUNTIME_PATH') && !empty(getenv('TP_RUNTIME_PATH'))) {
+    define('RUNTIME_PATH', rtrim(getenv('TP_RUNTIME_PATH'), '/') . DS);
+}
 defined('APP_PATH') or define('APP_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . DS);
 defined('ROOT_PATH') or define('ROOT_PATH', dirname(realpath(APP_PATH)) . DS);
 defined('EXTEND_PATH') or define('EXTEND_PATH', ROOT_PATH . 'extend' . DS);
@@ -94,6 +101,11 @@ define('DEPLOY_IS_ABROAD_ZONE', is_true(getenv('DEPLOY_IS_ABROAD_ZONE')));
  */
 define('DEPLOY_REGION_ID', getenv('DEPLOY_REGION_ID') ?: '');
 define('DEPLOY_ZONE_ID', getenv('DEPLOY_ZONE_ID') ?: '');
+/**
+ * 是否docker镜像部署
+ */
+define('DEPLOY_POD_NAME', getenv('DEPLOY_POD_NAME') ?: '');
+define('DEPLOY_POD_IP', getenv('DEPLOY_POD_IP') ?: '');
 /**
  * 生成并设置 request_id.
  */
