@@ -125,10 +125,8 @@ if (!IS_CLI && isset($_SERVER['TRACE_PHP_ID']) && !empty($_SERVER['TRACE_PHP_ID'
     define('TRACE_PHP_ID', $_SERVER['TRACE_PHP_ID']);
     define('REQUEST_ID', TRACE_PHP_ID);
 }
-if (!IS_CLI && !defined('REQUEST_ID')) {
-    define('REQUEST_ID', gen_request_id());
-    header('x-request-id: ' . REQUEST_ID);
-}
+defined('REQUEST_ID') || define('REQUEST_ID', gen_request_id());
+IS_CLI || header('x-request-id: ' . REQUEST_ID);
 
 // 注册自动加载
 \think\Loader::register();
