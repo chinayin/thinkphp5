@@ -128,6 +128,14 @@ if (!IS_CLI && isset($_SERVER['TRACE_PHP_ID']) && !empty($_SERVER['TRACE_PHP_ID'
 defined('REQUEST_ID') || define('REQUEST_ID', gen_request_id());
 IS_CLI || header('x-request-id: ' . REQUEST_ID);
 
+/**
+ * trace_id
+ * 2020-10-26 阿里云arms trace_id
+ */
+$TRACE_ID = function_exists('obtain_arms_trace_id') ? obtain_arms_trace_id() : '-';
+defined('TRACE_ID') || define('TRACE_ID', $TRACE_ID);
+IS_CLI || header('x-trace-id: ' . TRACE_ID);
+
 // 注册自动加载
 \think\Loader::register();
 

@@ -220,6 +220,8 @@ class File
             // 新加
             'reqid'    => REQUEST_ID,
             'pid'    => 'mypid'.getmypid(),
+            // 2020-10-26 traceid
+            'trace_id' => TRACE_ID ,
         ];
 
         if ($this->config['json']) {
@@ -227,7 +229,7 @@ class File
             return json_encode($info, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\r\n";
         }
 
-        array_unshift($info, "---------------------------------------------------------------\r\n[{$info['timestamp']}] {$requestInfo['reqid']} {$requestInfo['pid']} {$requestInfo['ip']} {$requestInfo['method']} {$requestInfo['host']}{$requestInfo['uri']}");
+        array_unshift($info, "---------------------------------------------------------------\r\n[{$info['timestamp']}] {$requestInfo['reqid']} {$requestInfo['pid']} {$requestInfo['trace_id']} {$requestInfo['ip']} {$requestInfo['method']} {$requestInfo['host']}{$requestInfo['uri']}");
         unset($info['timestamp']);
 
         return implode("\r\n", $info) . "\r\n";
