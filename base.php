@@ -18,25 +18,44 @@ defined('THINK_PATH') or define('THINK_PATH', __DIR__ . DS);
 define('LIB_PATH', THINK_PATH . 'library' . DS);
 define('CORE_PATH', LIB_PATH . 'think' . DS);
 define('TRAIT_PATH', LIB_PATH . 'traits' . DS);
-/**
- * docker中定义需要配置runtime目录
- */
-define('DEPLOY_IS_DOCKER', is_true(getenv('DEPLOY_POD_NAME') ? 1 : 0));
-if (DEPLOY_IS_DOCKER && !defined('RUNTIME_PATH') && !empty(getenv('TP_RUNTIME_PATH'))) {
-    define('RUNTIME_PATH', rtrim(getenv('TP_RUNTIME_PATH'), '/') . DS);
-}
+
 defined('APP_PATH') or define('APP_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . DS);
 defined('ROOT_PATH') or define('ROOT_PATH', dirname(realpath(APP_PATH)) . DS);
 defined('EXTEND_PATH') or define('EXTEND_PATH', ROOT_PATH . 'extend' . DS);
 defined('VENDOR_PATH') or define('VENDOR_PATH', ROOT_PATH . 'vendor' . DS);
-defined('RUNTIME_PATH') or define('RUNTIME_PATH', ROOT_PATH . 'runtime' . DS);
-defined('LOG_PATH') or define('LOG_PATH', RUNTIME_PATH . 'log' . DS);
-defined('CACHE_PATH') or define('CACHE_PATH', RUNTIME_PATH . 'cache' . DS);
-defined('TEMP_PATH') or define('TEMP_PATH', RUNTIME_PATH . 'temp' . DS);
+/**
+ * docker中定义需要配置runtime目录
+ */
+define('DEPLOY_IS_DOCKER', is_true(getenv('DEPLOY_POD_NAME') ? 1 : 0));
+if (DEPLOY_IS_DOCKER && !defined('RUNTIME_PATH')) {
+    // 2020-11-03 老配置兼容
+    if (!empty(getenv('TP_RUNTIME_PATH'))) {
+        define('RUNTIME_PATH', rtrim(getenv('TP_RUNTIME_PATH'), '/') . DS);
+    } else {
+        $DEPLOY_RUNTIME_ROOT_PATH = getenv('DEPLOY_RUNTIME_ROOT_PATH');
+        $DEPLOY_APP_NAME = getenv('DEPLOY_APP_NAME');
+        $DEPLOY_POD_NAME = getenv('DEPLOY_POD_NAME');
+        if ($DEPLOY_RUNTIME_ROOT_PATH && $DEPLOY_APP_NAME && $DEPLOY_POD_NAME) {
+            define('RUNTIME_PATH',
+                rtrim($DEPLOY_RUNTIME_ROOT_PATH, '/') . DS .
+                trim($DEPLOY_APP_NAME) . DS .
+                trim($DEPLOY_POD_NAME) . DS .
+                'runtime' . DS
+            );
+            define('RUNTIME_SCHEMA_PATH', ROOT_PATH . 'runtime' . DS . 'schema' . DS);
+        }
+    }
+}
 defined('CONF_PATH') or define('CONF_PATH', APP_PATH); // 配置文件目录
 defined('CONF_EXT') or define('CONF_EXT', EXT); // 配置文件后缀
 defined('ENV_PREFIX') or define('ENV_PREFIX', 'PHP_'); // 环境变量的配置前缀
 defined('COMMON_PATH') or define('COMMON_PATH', APP_PATH . 'common' . DS);
+//
+defined('RUNTIME_PATH') or define('RUNTIME_PATH', ROOT_PATH . 'runtime' . DS);
+defined('LOG_PATH') or define('LOG_PATH', RUNTIME_PATH . 'log' . DS);
+defined('CACHE_PATH') or define('CACHE_PATH', RUNTIME_PATH . 'cache' . DS);
+defined('TEMP_PATH') or define('TEMP_PATH', RUNTIME_PATH . 'temp' . DS);
+defined('RUNTIME_SCHEMA_PATH') or define('RUNTIME_SCHEMA_PATH', RUNTIME_PATH . 'schema' . DS);
 
 // 环境常量
 define('IS_CLI', PHP_SAPI == 'cli' ? true : false);
@@ -106,6 +125,7 @@ define('DEPLOY_ZONE_ID', getenv('DEPLOY_ZONE_ID') ?: '');
  */
 define('DEPLOY_POD_NAME', getenv('DEPLOY_POD_NAME') ?: '');
 define('DEPLOY_POD_IP', getenv('DEPLOY_POD_IP') ?: '');
+define('DEPLOY_APP_NAME', getenv('DEPLOY_APP_NAME') ?: '');
 /**
  * 生成并设置 request_id.
  */
