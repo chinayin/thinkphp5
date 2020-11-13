@@ -143,14 +143,15 @@ class Handle
                 'source'  => $this->getSourceCode($exception),
                 'datas'   => $this->getExtendData($exception),
                 'tables'  => [
+                    'RequestId'             => REQUEST_ID,
                     'GET Data'              => $_GET,
                     'POST Data'             => $_POST,
                     'Files'                 => $_FILES,
                     'Cookies'               => $_COOKIE,
                     'Session'               => isset($_SESSION) ? $_SESSION : [],
-                    'Server/Request Data'   => $_SERVER,
-                    'Environment Variables' => $_ENV,
-                    'ThinkPHP Constants'    => $this->getConst(),
+//                    'Server/Request Data'   => $_SERVER,
+//                    'Environment Variables' => $_ENV,
+//                    'ThinkPHP Constants'    => $this->getConst(),
                 ],
             ];
         } else {

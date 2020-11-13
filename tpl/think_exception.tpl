@@ -200,7 +200,7 @@ return implode(', ', $result);
     <?php } ?>
 </div>
 <?php } ?>
-<div class="copyright"><a title="官方网站" href="http://uhomes.com">UHOMES.COM</a><span>{ Find Uhomes Find Your Home }</span></div>
+
 <?php if(\think\App::$debug) { ?>
 <script>
     var LINE = <?php echo $line; ?>;
@@ -296,8 +296,8 @@ return implode(', ', $result);
     body{color: #333; font: 14px Verdana, "Helvetica Neue", helvetica, Arial, 'Microsoft YaHei', sans-serif; margin: 0; padding: 0 20px 20px; word-break: break-word;}
     h1{margin: 10px 0 0; font-size: 28px; font-weight: 500; line-height: 32px;}
     h2{color: #4288ce; font-weight: 400; padding: 6px 0; margin: 6px 0 0; font-size: 18px; border-bottom: 1px solid #eee;}
-    h3.subheading{color: #4288ce; margin: 6px 0 0; font-weight: 400;}
     h3{margin: 12px; font-size: 16px; font-weight: bold;}
+    h3.subheading{color: #4288ce; margin: 6px 0 0; font-weight: 400;}
     abbr{cursor: help; text-decoration: underline; text-decoration-style: dotted;}
     a{color: #868686; cursor: pointer;}
     a:hover{text-decoration: underline;}
