@@ -152,7 +152,7 @@ IS_CLI || header('x-request-id: ' . REQUEST_ID);
  * trace_id
  * 2020-10-26 阿里云arms trace_id
  */
-$TRACE_ID = function_exists('obtain_arms_trace_id') ? obtain_arms_trace_id() : '-';
+$TRACE_ID = function_exists('obtain_arms_trace_id') ? (obtain_arms_trace_id() ?: '-') : '-';
 defined('TRACE_ID') || define('TRACE_ID', $TRACE_ID);
 IS_CLI || header('x-trace-id: ' . TRACE_ID);
 
