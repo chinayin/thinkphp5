@@ -65,11 +65,29 @@ class Lang
     ];
 
     /**
+     * @var string 语言 Cookie 变量
+     */
+    private static $language = 'zh';
+
+    public static function lang()
+    {
+        return self::$language;
+    }
+
+    private static function parseLang($lang)
+    {
+        if (in_array($lang, ['zh-hk', 'zh-tw'])) {
+            return 'tc';
+        }
+        return substr($lang, 0, 2);
+    }
+
+    /**
      * 设定当前的语言
      *
      * @access public
      *
-     * @param  string $range 语言作用域
+     * @param string $range 语言作用域
      *
      * @return string
      */
@@ -77,6 +95,7 @@ class Lang
     {
         if ($range) {
             self::$range = $range;
+            self::$language = self::parseLang($range);
         }
 
         return self::$range;
@@ -87,9 +106,9 @@ class Lang
      *
      * @access public
      *
-     * @param  string|array $name  语言变量
-     * @param  string       $value 语言值
-     * @param  string       $range 语言作用域
+     * @param string|array $name  语言变量
+     * @param string       $value 语言值
+     * @param string       $range 语言作用域
      *
      * @return mixed
      */
@@ -113,8 +132,8 @@ class Lang
      *
      * @access public
      *
-     * @param  array|string $file  语言文件
-     * @param  string       $range 语言作用域
+     * @param array|string $file  语言文件
+     * @param string       $range 语言作用域
      *
      * @return mixed
      */
@@ -154,8 +173,8 @@ class Lang
      *
      * @access public
      *
-     * @param  string|null $name  语言变量
-     * @param  string      $range 语言作用域
+     * @param string|null $name  语言变量
+     * @param string      $range 语言作用域
      *
      * @return mixed
      */
@@ -171,9 +190,9 @@ class Lang
      *
      * @access public
      *
-     * @param  string|null $name  语言变量
-     * @param  array       $vars  变量替换
-     * @param  string      $range 语言作用域
+     * @param string|null $name  语言变量
+     * @param array       $vars  变量替换
+     * @param string      $range 语言作用域
      *
      * @return mixed
      */
@@ -259,6 +278,8 @@ class Lang
             self::$range = $failureLang ?: self::$range;
         }
 
+        // 2020-12-10 标识2位语言码
+        self::$language = self::parseLang(self::$range);
         return self::$range;
     }
 
@@ -267,7 +288,7 @@ class Lang
      *
      * @access public
      *
-     * @param  string $var 变量名称
+     * @param string $var 变量名称
      *
      * @return void
      */
@@ -281,7 +302,7 @@ class Lang
      *
      * @access public
      *
-     * @param  string $var 变量名称
+     * @param string $var 变量名称
      *
      * @return void
      */
@@ -295,7 +316,7 @@ class Lang
      *
      * @access public
      *
-     * @param  string $expire 过期时间
+     * @param string $expire 过期时间
      *
      * @return void
      */
@@ -309,7 +330,7 @@ class Lang
      *
      * @access public
      *
-     * @param  array $list 语言列表
+     * @param array $list 语言列表
      *
      * @return void
      */

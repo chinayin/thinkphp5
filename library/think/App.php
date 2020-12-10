@@ -111,16 +111,22 @@ class App
             // 2019-01-13 是否中文
             // 2019-09-25 是否简体中文 繁体中文 zh-hk或zh-tw 开头 这里需要调整
             $isLocaleChinese = true;
+            // 2020-12-10 是否繁体中文
+            $isLocaleTraditional = false;
             if ('zh-cn' !== Lang::range()) {
                 $isLocaleChinese = false;
             }
             // 2020-08-18 繁体中文也算中文
             if (in_array(Lang::range(), ['zh-hk', 'zh-tw'])) {
                 $isLocaleChinese = true;
+                $isLocaleTraditional = true;
             }
             define('IS_LOCALE_CHINESE', $isLocaleChinese);
+            define('IS_LOCALE_TRADITIONAL_CHINESE', $isLocaleTraditional);
             // 2019-09-25 增加语言表示常量
             define('LOCALE_LANGUAGE', Lang::range());
+            // 2020-12-10 增加两位语言码
+            define('LOCALE_LANG_CODE', Lang::lang());
 
             // 加载系统语言包
             Lang::load([
