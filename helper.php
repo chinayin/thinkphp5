@@ -727,8 +727,8 @@ if (!function_exists('__LOG_MESSAGE')) {
             'level' => \think\Log::INFO,
             // 记录结果格式  默认json  可传array
             'type' => null,
-            // 是否记录时间
-            'time' => true,
+            // 是否记录时间 (cli模式不记录时间)
+            'time' => IS_CLI ? false : true,
         ];
         $options = array_merge($defaultOptions, $options);
         $string = '';
