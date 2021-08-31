@@ -27,6 +27,7 @@ class File
         'apart_level' => [],
         'max_files'   => 0,
         'json'        => false,
+        'pid'         => false,
     ];
 
     // 实例化并传入参数
@@ -197,7 +198,7 @@ class File
 
             $message = implode("\r\n", $info);
 
-            $message = "[{$now}]" . $message . "\r\n";
+            $message = "[{$now}]" . ($this->config['pid']?('[ pid'.getmypid().' ]'):'') . $message . "\r\n";
         }
 
         return $message;
@@ -247,11 +248,11 @@ class File
                 $memory_use = number_format((memory_get_usage() - THINK_START_MEM) / 1024, 2);
 
                 $info = [
-                    'runtime' => number_format($runtime, 6) . 's',
-                    'reqs'    => $reqs . 'req/s',
-                    'memory'  => $memory_use . 'kb',
-                    'file'    => count(get_included_files()),
-                ] + $info;
+                        'runtime' => number_format($runtime, 6) . 's',
+                        'reqs'    => $reqs . 'req/s',
+                        'memory'  => $memory_use . 'kb',
+                        'file'    => count(get_included_files()),
+                    ] + $info;
 
             } elseif (!$apart) {
                 // 增加额外的调试信息

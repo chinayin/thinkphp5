@@ -21,6 +21,7 @@
   ],
   "require": {
     "php": ">=5.6.0",
+    "ext-json": "*",
     "chinayin/think-installer": "~2.0"
   },
   "require-dev": {
@@ -46,11 +47,13 @@
     "test-ci": "vendor/bin/phpunit --coverage-text"
   },
   "config": {
-    "preferred-install": "dist"
+    "sort-packages": true,
+    "preferred-install": "dist",
+    "optimize-autoloader": true
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "5.0-dev"
+      "dev-master": "5.0"
     }
   }
 }
