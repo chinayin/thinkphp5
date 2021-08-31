@@ -50,10 +50,5 @@
     "sort-packages": true,
     "preferred-install": "dist",
     "optimize-autoloader": true
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "5.0"
-    }
   }
 }
