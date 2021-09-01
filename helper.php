@@ -729,12 +729,14 @@ if (!function_exists('__LOG_MESSAGE')) {
             'type' => null,
             // 是否记录时间 (cli模式不记录时间)
             'time' => IS_CLI ? false : true,
+            // 日志时间格式
+            'time_fmt' => 'H:i:s,x',
         ];
         $options = array_merge($defaultOptions, $options);
         $string = '';
         // 是否加载时间
         if ($options['time']) {
-            $string .= '[' . microtime_format() . '] ';
+            $string .= '[' . microtime_format($options['time_fmt']) . '] ';
         }
         // 显示key
         if (!empty($key)) {
