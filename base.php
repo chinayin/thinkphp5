@@ -109,8 +109,9 @@ define('IS_UAT', APP_STATUS === 'uat');
 /**
  * 是否内网vpc环境
  */
-define('IS_PRIVATE_ZONE_SERVER', is_true(getenv('IS_PRIVATE_ZONE_SERVER')));
 define('DEPLOY_IS_VPC_ZONE', is_true(getenv('DEPLOY_IS_VPC_ZONE')));
+// 2022-06-01 在k8s环境下已废弃
+define('IS_PRIVATE_ZONE_SERVER', getenv('IS_PRIVATE_ZONE_SERVER') === false ? DEPLOY_IS_VPC_ZONE : is_true(getenv('IS_PRIVATE_ZONE_SERVER')));
 /**
  * 是否是海外服务器部署
  */
