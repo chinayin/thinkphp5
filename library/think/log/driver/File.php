@@ -22,7 +22,7 @@ class File
     protected $config = [
         'time_format' => ' c ',
         'single'      => false,
-        'file_size'   => 2097152,
+        'file_size'   => 2097152*5,
         'path'        => LOG_PATH,
         'apart_level' => [],
         'max_files'   => 0,
@@ -176,7 +176,7 @@ class File
     {
         if (is_file($destination) && floor($this->config['file_size']) <= filesize($destination)) {
             try {
-                @rename($destination, dirname($destination) . DIRECTORY_SEPARATOR . time() . '-' . basename($destination));
+                rename($destination, dirname($destination) . DIRECTORY_SEPARATOR . time() . '-' . basename($destination));
             } catch (\Exception $e) {
             }
         }
