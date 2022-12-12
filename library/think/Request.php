@@ -1090,6 +1090,10 @@ class Request
         $default = array_pop($filters);
         foreach ($filters as $filter) {
             if (is_callable($filter)) {
+                // 兼容php8.1
+                if(is_null($value)) {
+                    continue;
+                }
                 // 调用函数或者方法过滤
                 $value = call_user_func($filter, $value);
             } elseif (is_scalar($value)) {
