@@ -264,6 +264,13 @@ class Lang
                 $langSet = self::$acceptLanguage[$langSet];
             }
         }
+
+        if (preg_match('/^([a-z\d\-]+)/i', $langSet, $matches)) {
+            $langSet = strtolower($matches[1]);
+        } else {
+            $langSet = self::$range;
+        }
+
         // 2019-03-26 特殊处理 转移别名语言
         if (isset(self::$aliasLanguage[$langSet])) {
             $langSet = self::$aliasLanguage[$langSet];
