@@ -753,6 +753,10 @@ if (!function_exists('__LOG_MESSAGE')) {
         } elseif (is_array($data)) {
             $string .= ((null !== $data && 'ARRAY' === strtoupper($options['type'])) ?
                 var_export($data, true) : json_encode($data, JSON_UNESCAPED_UNICODE));
+        } elseif (is_object($data)) {
+            $data = $data instanceof Model ? $data->toArray() : (array)$data;
+            $string .= ((null !== $data && 'ARRAY' === strtoupper($options['type'])) ?
+                var_export($data, true) : json_encode($data, JSON_UNESCAPED_UNICODE));
         } else {
             $string .= $data;
         }
