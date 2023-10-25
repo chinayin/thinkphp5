@@ -119,6 +119,7 @@ define('DEPLOY_IS_ABROAD_ZONE', is_true(getenv('DEPLOY_IS_ABROAD_ZONE')));
 /**
  * 服务器部署地域
  */
+define('DEPLOY_REGION_A2CODE', getenv('DEPLOY_REGION_A2CODE') ?: '');
 define('DEPLOY_REGION_ID', getenv('DEPLOY_REGION_ID') ?: '');
 define('DEPLOY_ZONE_ID', getenv('DEPLOY_ZONE_ID') ?: '');
 /**
