@@ -20,7 +20,8 @@ use think\Request;
 class File
 {
     protected $config = [
-        'time_format' => ' c ',
+        //'time_format' => ' c ',
+        'time_format' => 'Y-m-d\TH:i:s.vP',
         'single'      => false,
         'file_size'   => 2097152*5,
         'path'        => LOG_PATH,
@@ -60,7 +61,10 @@ class File
                     $msg = var_export($msg, true);
                 }
 
-                $info[$type][] = $this->config['json'] ? $msg : '[ ' . $type . ' ] ' . $msg;
+                // 老版格式
+                //$info[$type][] = $this->config['json'] ? $msg : '[ ' . $type . ' ] ' . $msg;
+                // 2024-03-26 新版格式
+                $info[$type][] = $this->config['json'] ? $msg : sprintf("%-5s : %s", strtoupper($type), $msg);
             }
 
             if (!$this->config['json'] && (true === $this->config['apart_level'] || in_array($type, $this->config['apart_level']))) {
@@ -147,9 +151,11 @@ class File
         // 检测日志文件大小，超过配置大小则备份日志文件重新生成
         $this->checkLogSize($destination);
 
-        // 日志信息封装
-        $info['timestamp'] = date($this->config['time_format']);
+        //$info['timestamp'] = date($this->config['time_format']);
+        // 毫秒值时间
+        $info['timestamp'] = (new \DateTimeImmutable())->format($this->config['time_format']);
 
+        // 日志信息封装
         foreach ($message as $type => $msg) {
             $info[$type] = is_array($msg) ? implode("\r\n", $msg) : $msg;
         }
@@ -198,7 +204,10 @@ class File
 
             $message = implode("\r\n", $info);
 
-            $message = "[{$now}]" . ($this->config['pid']?('[ pid'.getmypid().' ]'):'') . $message . "\r\n";
+            // 老版格式
+            //$message = "[{$now}]" . ($this->config['pid']?('[ pid'.getmypid().' ]'):'') . $message . "\r\n";
+            // 2024-03-26 新版格式
+            $message = "{$now} " . REQUEST_ID . "|" . TRACE_ID . "|" . BIZ_ID . "|" . getmypid() . " {$message}\r\n";
         }
 
         return $message;
@@ -214,15 +223,17 @@ class File
     {
         $request     = Request::instance();
         $requestInfo = [
-            'ip'     => $request->ip(),
+            'ip' => $request->ip(),
             'method' => $request->method(),
-            'host'   => $request->host(),
-            'uri'    => $request->url(),
+            'host' => $request->host(),
+            'uri' => $request->url(),
             // 新加
-            'reqid'    => REQUEST_ID,
-            'pid'    => 'mypid'.getmypid(),
-            // 2020-10-26 traceid
-            'trace_id' => TRACE_ID ,
+            'request_id' => REQUEST_ID,
+            'pid' => getmypid(),
+            // 2020-10-26 trace_id
+            'trace_id' => TRACE_ID,
+            // 2024-03-26 biz_id
+            'biz_id' => BIZ_ID,
         ];
 
         if ($this->config['json']) {
@@ -230,7 +241,9 @@ class File
             return json_encode($info, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\r\n";
         }
 
-        array_unshift($info, "---------------------------------------------------------------\r\n[{$info['timestamp']}] {$requestInfo['reqid']} {$requestInfo['pid']} {$requestInfo['trace_id']} {$requestInfo['ip']} {$requestInfo['method']} {$requestInfo['host']}{$requestInfo['uri']}");
+        //array_unshift($info, "---------------------------------------------------------------\r\n[{$info['timestamp']}] {$requestInfo['reqid']} {$requestInfo['pid']} {$requestInfo['trace_id']} {$requestInfo['ip']} {$requestInfo['method']} {$requestInfo['host']}{$requestInfo['uri']}");
+        // 2024-03-26 新版格式
+        array_unshift($info, "---------------------------------------------------------------\r\n{$info['timestamp']} {$requestInfo['request_id']}|{$requestInfo['trace_id']}|{$requestInfo['biz_id']}|{$requestInfo['pid']} {$requestInfo['ip']} {$requestInfo['method']} {$requestInfo['host']}{$requestInfo['uri']}");
         unset($info['timestamp']);
 
         return implode("\r\n", $info) . "\r\n";

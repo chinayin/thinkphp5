@@ -20,7 +20,7 @@
     }
   ],
   "require": {
-    "php": ">=5.6.0",
+    "php": ">=7.0",
     "ext-json": "*",
     "chinayin/think-installer": "~2.0"
   },

@@ -134,7 +134,9 @@ define('DEPLOY_APP_NAME', getenv('DEPLOY_APP_NAME') ?: '');
 function gen_request_id()
 {
     // 2020-01-14 新唯一id,取16位为了区分正式测试生成
-    return substr(md5(uniqid(rand(), true)), 8, 16);
+    //return substr(md5(uniqid(rand(), true)), 8, 16);
+    // 2024-03-26 新版12位
+    return substr(bin2hex(random_bytes((int)ceil(12 / 2))), 0, 12);
 }
 
 /**
@@ -158,6 +160,12 @@ if (!IS_CLI && isset($_SERVER['TRACE_PHP_ID']) && !empty($_SERVER['TRACE_PHP_ID'
 $TRACE_ID = function_exists('obtain_arms_trace_id') ? (obtain_arms_trace_id() ?: '-') : '-';
 defined('TRACE_ID') || define('TRACE_ID', $TRACE_ID);
 IS_CLI || header('x-trace-id: ' . TRACE_ID);
+
+/**
+ * biz_id
+ * 2024-03-26 增加业务ID
+ */
+defined('BIZ_ID') || define('BIZ_ID', '-');
 
 // 注册自动加载
 \think\Loader::register();
