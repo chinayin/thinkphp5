@@ -27,7 +27,9 @@ defined('VENDOR_PATH') or define('VENDOR_PATH', ROOT_PATH . 'vendor' . DS);
  * docker中定义需要配置runtime目录
  */
 define('DEPLOY_IS_DOCKER', is_true(getenv('DEPLOY_POD_NAME') ? 1 : 0));
-if (DEPLOY_IS_DOCKER && !defined('RUNTIME_PATH')) {
+// 2024-05-07 代码是否 build 在 docker 镜像中
+define('BUILD_IN_DOCKER', is_true(getenv('BUILD_IN_DOCKER') ? 1 : 0));
+if (DEPLOY_IS_DOCKER && !BUILD_IN_DOCKER && !defined('RUNTIME_PATH')) {
     // 2020-11-03 老配置兼容
     if (!empty(getenv('TP_RUNTIME_PATH'))) {
         define('RUNTIME_PATH', rtrim(getenv('TP_RUNTIME_PATH'), '/') . DS);
