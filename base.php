@@ -124,6 +124,7 @@ define('DEPLOY_IS_ABROAD_ZONE', is_true(getenv('DEPLOY_IS_ABROAD_ZONE')));
 define('DEPLOY_REGION_A2CODE', getenv('DEPLOY_REGION_A2CODE') ?: '');
 define('DEPLOY_REGION_ID', getenv('DEPLOY_REGION_ID') ?: '');
 define('DEPLOY_ZONE_ID', getenv('DEPLOY_ZONE_ID') ?: '');
+define('DEPLOY_CLOUD_ID', getenv('DEPLOY_CLOUD_ID') ?: '');
 /**
  * 是否docker镜像部署
  */
